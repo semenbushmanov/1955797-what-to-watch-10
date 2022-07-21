@@ -1,5 +1,6 @@
-import FilmCard from '../../components/film-card/film-card';
+import FilmCardList from '../../components/film-card-list/film-card-list';
 import Logo from '../../components/logo/logo';
+import { Films } from '../../types/film';
 
 type MainProps = {
   filmsNumberToRender: number;
@@ -7,10 +8,11 @@ type MainProps = {
     name: string;
     genre: string;
     year: number;
-  }
+  };
+  films: Films;
 }
 
-function Main({filmsNumberToRender, promoFilm}: MainProps): JSX.Element {
+function Main({filmsNumberToRender, promoFilm, films}: MainProps): JSX.Element {
   return (
     <>
       <section className="film-card">
@@ -105,9 +107,7 @@ function Main({filmsNumberToRender, promoFilm}: MainProps): JSX.Element {
             </li>
           </ul>
 
-          <div className="catalog__films-list">
-            {[...Array(filmsNumberToRender)].map(() => FilmCard())}
-          </div>
+          <FilmCardList films={films}/>
 
           <div className="catalog__more">
             <button className="catalog__button" type="button">Show more</button>

@@ -1,6 +1,13 @@
 import Logo from '../../components/logo/logo';
+import { Film } from '../../types/film';
 
-function FilmPage(): JSX.Element {
+type FilmPageProps = {
+  film: Film;
+};
+
+function FilmPage(props: FilmPageProps): JSX.Element {
+  const {film} = props;
+
   return (
     <>
       <section className="film-card film-card--full">
@@ -28,7 +35,7 @@ function FilmPage(): JSX.Element {
 
           <div className="film-card__wrap">
             <div className="film-card__desc">
-              <h2 className="film-card__title">The Grand Budapest Hotel</h2>
+              <h2 className="film-card__title">{film.name}</h2>
               <p className="film-card__meta">
                 <span className="film-card__genre">Drama</span>
                 <span className="film-card__year">2014</span>

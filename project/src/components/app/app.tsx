@@ -8,6 +8,7 @@ import AddReview from '../../pages/add-review/add-review';
 import Player from '../../pages/player/player';
 import PageNotFound from '../../pages/page-not-found/page-not-found';
 import PrivateRoute from '../private-route/private-route';
+import { Film, Films, Reviews } from '../../types/film';
 
 type AppProps = {
   filmsNumberToRender: number;
@@ -15,16 +16,26 @@ type AppProps = {
     name: string;
     genre: string;
     year: number;
-  }
+  };
+  films: Films;
+  reviews: Reviews;
 }
 
-function App({filmsNumberToRender, promoFilm}: AppProps): JSX.Element {
+function App({filmsNumberToRender, promoFilm, films, reviews}: AppProps): JSX.Element {
+  const [firstFilm] = films;
+
   return (
     <BrowserRouter>
       <Routes>
         <Route
           path={AppRoute.Main}
-          element={<Main filmsNumberToRender={filmsNumberToRender} promoFilm={promoFilm} />}
+          element={
+            <Main
+              filmsNumberToRender={filmsNumberToRender}
+              promoFilm={promoFilm}
+              films={films}
+            />
+          }
         />
         <Route
           path={AppRoute.SignIn}
@@ -42,7 +53,11 @@ function App({filmsNumberToRender, promoFilm}: AppProps): JSX.Element {
         />
         <Route
           path={AppRoute.Film}
-          element={<FilmPage />}
+          element={
+            <FilmPage
+              film={firstFilm as Film}
+            />
+          }
         />
         <Route
           path={AppRoute.AddReview}

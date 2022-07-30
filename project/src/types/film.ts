@@ -18,14 +18,16 @@ export type Film = {
   isFavorite: boolean;
 };
 
-export type Review = {
-  id: number;
-  text: string;
-  rating: number;
-  userName: string;
+export type Comment = {
+  comment: string;
   date: string;
+  id: number;
+  rating: number;
+  user: {
+    id: number;
+    name: string;
+  }
 };
 
 export type Films = Film[];
-
-export type Reviews = Review[];
+export type Comments = Comment[];

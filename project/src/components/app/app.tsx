@@ -8,22 +8,14 @@ import AddReview from '../../pages/add-review/add-review';
 import Player from '../../pages/player/player';
 import PageNotFound from '../../pages/page-not-found/page-not-found';
 import PrivateRoute from '../private-route/private-route';
-import { Film, Films, Reviews } from '../../types/film';
+import { Film, Films } from '../../types/film';
 
 type AppProps = {
-  filmsNumberToRender: number;
-  promoFilm: {
-    name: string;
-    genre: string;
-    year: number;
-  };
+  promoFilm: Film;
   films: Films;
-  reviews: Reviews;
 }
 
-function App({filmsNumberToRender, promoFilm, films, reviews}: AppProps): JSX.Element {
-  const [firstFilm] = films;
-
+function App({promoFilm, films}: AppProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
@@ -31,7 +23,6 @@ function App({filmsNumberToRender, promoFilm, films, reviews}: AppProps): JSX.El
           path={AppRoute.Main}
           element={
             <Main
-              filmsNumberToRender={filmsNumberToRender}
               promoFilm={promoFilm}
               films={films}
             />
@@ -45,33 +36,31 @@ function App({filmsNumberToRender, promoFilm, films, reviews}: AppProps): JSX.El
           path={AppRoute.MyList}
           element={
             <PrivateRoute
-              authorizationStatus={AuthorizationStatus.NoAuth}
+              authorizationStatus={AuthorizationStatus.Auth}
             >
-              <MyList />
+              <MyList films={films}/>
             </PrivateRoute>
           }
         />
         <Route
           path={AppRoute.Film}
           element={
-            <FilmPage
-              film={firstFilm as Film}
-            />
+            <FilmPage films={films}/>
           }
         />
         <Route
           path={AppRoute.AddReview}
           element={
             <PrivateRoute
-              authorizationStatus={AuthorizationStatus.NoAuth}
+              authorizationStatus={AuthorizationStatus.Auth}
             >
-              <AddReview />
+              <AddReview name={films[0].name} backgroundImage={films[0].backgroundImage} previewImage={films[0].previewImage}/>
             </PrivateRoute>
           }
         />
         <Route
           path={AppRoute.Player}
-          element={<Player />}
+          element={<Player name={films[0].name} posterImage={films[0].posterImage} videoLink={films[0].videoLink}/>}
         />
         <Route
           path='*'

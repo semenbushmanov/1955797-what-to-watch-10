@@ -8,8 +8,7 @@ type FilmCardListProps = {
 
 function FilmCardList(props: FilmCardListProps): JSX.Element {
   const { films } = props;
-
-  const [ ,setActiveFilmCard ] = useState<number|undefined>();
+  const [ ActiveFilmCard, setActiveFilmCard ] = useState<number|undefined>();
 
   const onMouseEnter = (filmId: number) => {
     setActiveFilmCard(filmId);
@@ -21,7 +20,18 @@ function FilmCardList(props: FilmCardListProps): JSX.Element {
 
   return (
     <div className="catalog__films-list">
-      {films.map((film) => (<FilmCard key={film.id} id={film.id} name={film.name} previewImage={film.previewImage} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}/>))}
+      {films.map((film) => (
+        <FilmCard
+          key={film.id}
+          id={film.id}
+          name={film.name}
+          previewImage={film.previewImage}
+          onMouseEnter={onMouseEnter}
+          onMouseLeave={onMouseLeave}
+          isPlaying={film.id === ActiveFilmCard}
+          videoSrc={film.previewVideoLink}
+        />
+      ))}
     </div>
   );
 }

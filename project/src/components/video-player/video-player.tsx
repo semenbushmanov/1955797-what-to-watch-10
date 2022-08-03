@@ -19,6 +19,7 @@ function VideoPlayer({isPlaying, src, poster }: VideoPlayerProps): JSX.Element {
       return;
     }
 
+    videoRef.current.pause();
     videoRef.current.load();
   }, [isPlaying]);
 

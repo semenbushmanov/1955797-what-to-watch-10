@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Videoplayer from '../video-player/video-player';
 
@@ -5,32 +6,30 @@ type FilmCardProps = {
   id: number;
   name: string;
   previewImage: string;
-  onMouseEnter: (filmId: number) => void;
-  onMouseLeave: () => void;
-  isPlaying: boolean;
   videoSrc: string;
 };
 
 function FilmCard(props: FilmCardProps): JSX.Element {
-  const { id, name, previewImage, isPlaying, videoSrc } = props;
-  const { onMouseEnter, onMouseLeave } = props;
-
+  const { id, name, previewImage, videoSrc } = props;
+  const [ isPlaying, setPlaying ] = useState(false);
   let timer: NodeJS.Timeout;
 
   const handleMouseEnter = () => {
-    timer = setTimeout(() => onMouseEnter(id), 1000);
+    timer = setTimeout(() => setPlaying(true), 1000);
   };
 
   const handleMouseLeave = () => {
     clearTimeout(timer);
-    onMouseLeave();
+    if (isPlaying) {
+      setPlaying(false);
+    }
   };
 
   return (
     <article
       className="small-film-card catalog__films-card"
-      onMouseEnter={() => handleMouseEnter()}
-      onMouseLeave={() => handleMouseLeave()}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
     >
       <div className="small-film-card__image">
         <Videoplayer src={videoSrc} poster={previewImage} isPlaying={isPlaying}/>

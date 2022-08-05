@@ -2,15 +2,17 @@ import Logo from '../../components/logo/logo';
 import Copyright from '../../components/copyright/copyright';
 import UserBlock from '../../components/user-block/user-block';
 import PageNotFound from '../page-not-found/page-not-found';
-import { Films } from '../../types/film';
+import Tabs from '../../components/tabs/tabs';
+import { Films, Comments } from '../../types/film';
 import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
 type FilmPageProps = {
   films: Films;
+  comments: Comments;
 };
 
-function FilmPage({films}: FilmPageProps): JSX.Element {
+function FilmPage({films, comments}: FilmPageProps): JSX.Element {
   const { id } = useParams();
   const film = films.find((item) => item.id.toString() === id);
 
@@ -62,45 +64,7 @@ function FilmPage({films}: FilmPageProps): JSX.Element {
           </div>
         </div>
 
-        <div className="film-card__wrap film-card__translate-top">
-          <div className="film-card__info">
-            <div className="film-card__poster film-card__poster--big">
-              <img src={film.posterImage} alt={`${film.name} poster`} width="218" height="327" />
-            </div>
-
-            <div className="film-card__desc">
-              <nav className="film-nav film-card__nav">
-                <ul className="film-nav__list">
-                  <li className="film-nav__item film-nav__item--active">
-                    <a href="#todo" className="film-nav__link">Overview</a>
-                  </li>
-                  <li className="film-nav__item">
-                    <a href="#todo" className="film-nav__link">Details</a>
-                  </li>
-                  <li className="film-nav__item">
-                    <a href="#todo" className="film-nav__link">Reviews</a>
-                  </li>
-                </ul>
-              </nav>
-
-              <div className="film-rating">
-                <div className="film-rating__score">{film.rating}</div>
-                <p className="film-rating__meta">
-                  <span className="film-rating__level">Very good</span>
-                  <span className="film-rating__count">{`${film.scoresCount} ratings`}</span>
-                </p>
-              </div>
-
-              <div className="film-card__text">
-                <p>{film.description}</p>
-
-                <p className="film-card__director"><strong>{`Director: ${film.director}`}</strong></p>
-
-                <p className="film-card__starring"><strong>{`Starring: ${film.starring.join('')}`}</strong></p>
-              </div>
-            </div>
-          </div>
-        </div>
+        <Tabs film={film} comments={comments}/>
       </section>
 
       <div className="page-content">

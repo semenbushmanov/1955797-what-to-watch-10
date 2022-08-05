@@ -8,14 +8,15 @@ import AddReview from '../../pages/add-review/add-review';
 import Player from '../../pages/player/player';
 import PageNotFound from '../../pages/page-not-found/page-not-found';
 import PrivateRoute from '../private-route/private-route';
-import { Film, Films } from '../../types/film';
+import { Film, Films, Comments } from '../../types/film';
 
 type AppProps = {
   promoFilm: Film;
   films: Films;
+  comments: Comments;
 }
 
-function App({promoFilm, films}: AppProps): JSX.Element {
+function App({promoFilm, films, comments}: AppProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
@@ -45,9 +46,16 @@ function App({promoFilm, films}: AppProps): JSX.Element {
         <Route
           path={AppRoute.Film}
           element={
-            <FilmPage films={films}/>
+            <FilmPage films={films} comments={comments}/>
           }
-        />
+        >
+          <Route
+            path=':tab'
+            element={
+              <FilmPage films={films} comments={comments}/>
+            }
+          />
+        </Route>
         <Route
           path={AppRoute.AddReview}
           element={

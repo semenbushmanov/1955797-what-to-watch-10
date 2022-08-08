@@ -20,4 +20,3 @@ function Logo({logoStyle}: LogoProps): JSX.Element {
 }
 
 export default Logo;
-

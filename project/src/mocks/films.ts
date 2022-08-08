@@ -16,7 +16,7 @@ export const films: Films = [
     director: 'Wes Anderson',
     starring: ['Bill Murray, Edward Norton, Jude Law, Willem Dafoe, Saoirse Ronan, Tony Revoloru'],
     runTime: 99,
-    genre: 'Drama',
+    genre: 'Comedy',
     released: 2014,
     isFavorite: false,
   }, {
@@ -34,7 +34,7 @@ export const films: Films = [
     director: 'Terry Spielberg',
     starring: ['Tom Roberts, Jeremy Storm, Ian McGregor, Ann Peterson'],
     runTime: 115,
-    genre: 'Thriller',
+    genre: 'Comedy',
     released: 2009,
     isFavorite: false,
   }, {
@@ -52,7 +52,7 @@ export const films: Films = [
     director: 'Wright brothers',
     starring: ['Leo Di Caprio, Arnold Smith, Veronica Steel, Debora Wilson'],
     runTime: 156,
-    genre: 'Kids & Family',
+    genre: 'Comedy',
     released: 2021,
     isFavorite: true,
   }, {
@@ -88,7 +88,7 @@ export const films: Films = [
     director: 'Paul Miller',
     starring: ['Bill Murray, Edward Norton, Jude Law, Willem Dafoe, Saoirse Ronan, Tony Revoloru'],
     runTime: 123,
-    genre: 'Horror',
+    genre: 'Comedy',
     released: 2020,
     isFavorite: false,
   }, {

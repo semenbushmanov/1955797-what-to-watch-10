@@ -5,7 +5,6 @@ export const changeGenre = createAction(
   (value) => ({payload: value,})
 );
 export const getFilms = createAction('film/getFilms');
-export const getFilteredFilms = createAction('film/getFilteredFilms');
 export const getPromoFilm = createAction('film/getPromoFilm');
 export const getFavoriteFilms = createAction('film/getFavoriteFilms');
 export const getComments = createAction(

@@ -5,17 +5,15 @@ import { comments } from '../mocks/comments';
 import { Film, Films, Comments } from '../types/film';
 
 const initialState: {
-  genre: string;
+  currentGenre: string;
   films: Films;
-  filteredFilms: Films;
   promoFilm: Film;
   favoriteFilms: Films;
   film: Film;
   comments: Comments;
 } = {
-  genre: 'All genres',
+  currentGenre: 'All genres',
   films,
-  filteredFilms: [],
   promoFilm,
   favoriteFilms: films,
   film: films[3],
@@ -25,7 +23,7 @@ const initialState: {
 export const reducer = createReducer(initialState, (builder) => {
   builder
     .addCase(changeGenre, (state, action) => {
-      state.genre = action.payload;
+      state.currentGenre = action.payload;
     })
     .addCase(getFilms, (state) => {
       state.films = films;

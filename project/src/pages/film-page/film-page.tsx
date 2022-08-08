@@ -4,16 +4,12 @@ import UserBlock from '../../components/user-block/user-block';
 import PageNotFound from '../page-not-found/page-not-found';
 import Tabs from '../../components/tabs/tabs';
 import MoreLikeThis from '../../components/more-like-this/more-like-this';
-import { Films, Comments } from '../../types/film';
 import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import { useAppSelector } from '../../hooks/index';
 
-type FilmPageProps = {
-  films: Films;
-  comments: Comments;
-};
-
-function FilmPage({films, comments}: FilmPageProps): JSX.Element {
+function FilmPage(): JSX.Element {
+  const { films, comments } = useAppSelector((state) => state);
   const { id } = useParams();
   const film = films.find((item) => item.id.toString() === id);
 

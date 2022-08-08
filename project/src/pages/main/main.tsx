@@ -2,16 +2,10 @@ import FilmCardList from '../../components/film-card-list/film-card-list';
 import Logo from '../../components/logo/logo';
 import Copyright from '../../components/copyright/copyright';
 import UserBlock from '../../components/user-block/user-block';
-import { Film, Films } from '../../types/film';
+import { useAppSelector } from '../../hooks/index';
 
-type MainProps = {
-  promoFilm: Film;
-  films: Films;
-}
-
-function Main(props: MainProps): JSX.Element {
-  const { promoFilm } = props;
-  const { films } = props;
+function Main(): JSX.Element {
+  const { promoFilm, films } = useAppSelector((state) => state);
 
   return (
     <>

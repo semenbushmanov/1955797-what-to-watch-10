@@ -1,10 +1,10 @@
-type PlayerProps = {
-  name: string;
-  posterImage: string;
-  videoLink: string;
-};
+import { useAppSelector } from '../../hooks/index';
 
-function Player({name, posterImage, videoLink}: PlayerProps): JSX.Element {
+function Player(): JSX.Element {
+  const { film } = useAppSelector((state) => state);
+  const {name, posterImage, videoLink} = film;
+
+
   return (
     <div className="player">
       <video src={videoLink} className="player__video" poster={posterImage}></video>

@@ -8,25 +8,15 @@ import AddReview from '../../pages/add-review/add-review';
 import Player from '../../pages/player/player';
 import PageNotFound from '../../pages/page-not-found/page-not-found';
 import PrivateRoute from '../private-route/private-route';
-import { Film, Films, Comments } from '../../types/film';
 
-type AppProps = {
-  promoFilm: Film;
-  films: Films;
-  comments: Comments;
-}
-
-function App({promoFilm, films, comments}: AppProps): JSX.Element {
+function App(): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
         <Route
           path={AppRoute.Main}
           element={
-            <Main
-              promoFilm={promoFilm}
-              films={films}
-            />
+            <Main />
           }
         />
         <Route
@@ -39,20 +29,20 @@ function App({promoFilm, films, comments}: AppProps): JSX.Element {
             <PrivateRoute
               authorizationStatus={AuthorizationStatus.Auth}
             >
-              <MyList films={films}/>
+              <MyList />
             </PrivateRoute>
           }
         />
         <Route
           path={AppRoute.Film}
           element={
-            <FilmPage films={films} comments={comments}/>
+            <FilmPage />
           }
         >
           <Route
             path=':tab'
             element={
-              <FilmPage films={films} comments={comments}/>
+              <FilmPage />
             }
           />
         </Route>
@@ -62,13 +52,13 @@ function App({promoFilm, films, comments}: AppProps): JSX.Element {
             <PrivateRoute
               authorizationStatus={AuthorizationStatus.Auth}
             >
-              <AddReview name={films[0].name} backgroundImage={films[0].backgroundImage} previewImage={films[0].previewImage}/>
+              <AddReview />
             </PrivateRoute>
           }
         />
         <Route
           path={AppRoute.Player}
-          element={<Player name={films[0].name} posterImage={films[0].posterImage} videoLink={films[0].videoLink}/>}
+          element={<Player />}
         />
         <Route
           path='*'

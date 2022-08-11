@@ -1,17 +1,20 @@
 import { createAction } from '@reduxjs/toolkit';
+import { Films } from '../types/film';
 
 export const changeGenre = createAction(
   'film/changeGenre',
   (value) => ({payload: value,})
 );
-export const getFilms = createAction('film/getFilms');
-export const getPromoFilm = createAction('film/getPromoFilm');
-export const getFavoriteFilms = createAction('film/getFavoriteFilms');
+export const getFilms = createAction<Films>('data/getFilms');
+export const getPromoFilm = createAction('data/getPromoFilm');
+export const getFavoriteFilms = createAction('data/getFavoriteFilms');
 export const getComments = createAction(
-  'film/getComments',
+  'data/getComments',
   (value) => ({payload: value,})
 );
 export const getFilm = createAction(
-  'film/getFilm',
+  'data/getFilm',
   (value) => ({payload: value,})
 );
+export const setError = createAction<string | null>('data/setError');
+export const setDataLoadingStatus = createAction<boolean>('data/setDataLoadingStatus');

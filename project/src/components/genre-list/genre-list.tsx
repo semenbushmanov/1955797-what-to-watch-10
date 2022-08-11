@@ -1,20 +1,24 @@
 import { Films } from '../../types/film';
 import { useAppSelector, useAppDispatch } from '../../hooks/index';
 import { changeGenre } from '../../store/action';
+import { Link } from 'react-router-dom';
+import { ALL_GENRES } from '../../const';
 
 type GenreListProps = {
   films: Films;
+  resetFilmsCount: () => void;
 }
 
-function GenreList({films}: GenreListProps): JSX.Element {
+function GenreList({films, resetFilmsCount}: GenreListProps): JSX.Element {
   const { currentGenre } = useAppSelector((state) => state);
   const genreListSet = new Set(films.map((film) => film.genre));
   const genreList = [...genreListSet];
-  genreList.unshift('All genres');
+  genreList.unshift(ALL_GENRES);
   const dispatch = useAppDispatch();
 
   const handleGenreChange = (genre: string) => {
     dispatch(changeGenre(genre));
+    resetFilmsCount();
   };
 
   return (
@@ -25,7 +29,7 @@ function GenreList({films}: GenreListProps): JSX.Element {
           className={genre === currentGenre ? 'catalog__genres-item catalog__genres-item--active' : 'catalog__genres-item'}
           onClick={() => handleGenreChange(genre)}
         >
-          <a href="#todo" className="catalog__genres-link">{genre}</a>
+          <Link to="#" className="catalog__genres-link">{genre}</Link>
         </li>
       ))}
     </ul>

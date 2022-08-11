@@ -1,10 +1,9 @@
 import { Film } from '../../types/film';
+import { MINS_IN_HOUR } from '../../const';
 
 type FilmDetailsProps = {
   film: Film;
 }
-
-const MINS_IN_HOUR = 60;
 
 function FilmDetails({film}: FilmDetailsProps): JSX.Element {
   return (

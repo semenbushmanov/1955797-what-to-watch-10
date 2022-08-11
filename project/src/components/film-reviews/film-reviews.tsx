@@ -5,9 +5,13 @@ type FilmReviewsProps = {
   comments: Comments;
 }
 
+const NUMBER_OF_COLUMNS = 2;
+
 function FilmReviews({comments}: FilmReviewsProps): JSX.Element {
-  const firstColumnComments = comments.slice(0, 3);
-  const secondColumnComments = comments.slice(3,6);
+  const commentsNumberInColumn = Math.floor(comments.length / NUMBER_OF_COLUMNS);
+
+  const firstColumnComments = [...comments].slice(0, commentsNumberInColumn);
+  const secondColumnComments = [...comments].slice(commentsNumberInColumn, comments.length);
 
   return (
     <div className="film-card__reviews film-card__row">

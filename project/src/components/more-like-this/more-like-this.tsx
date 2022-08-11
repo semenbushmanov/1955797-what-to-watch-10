@@ -9,7 +9,7 @@ type MoreLikeThisProps = {
 const SIMILAR_FILMS_COUNT = 4;
 
 function MoreLikeThis({films, genre}: MoreLikeThisProps): JSX.Element {
-  const similarFilms = films.filter((film) => film.genre === genre).slice(0, SIMILAR_FILMS_COUNT);
+  const similarFilms = [...films].filter((film) => film.genre === genre).slice(0, SIMILAR_FILMS_COUNT);
 
   return (
     <section className="catalog catalog--like-this">

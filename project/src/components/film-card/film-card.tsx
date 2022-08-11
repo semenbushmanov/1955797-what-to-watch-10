@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Videoplayer from '../video-player/video-player';
+import { START_VIDEO_TIMEOUT } from '../../const';
 
 type FilmCardProps = {
   id: number;
@@ -15,7 +16,7 @@ function FilmCard(props: FilmCardProps): JSX.Element {
   let timer: NodeJS.Timeout;
 
   const handleMouseEnter = () => {
-    timer = setTimeout(() => setPlaying(true), 1000);
+    timer = setTimeout(() => setPlaying(true), START_VIDEO_TIMEOUT);
   };
 
   const handleMouseLeave = () => {

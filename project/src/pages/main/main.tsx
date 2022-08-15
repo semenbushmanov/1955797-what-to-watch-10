@@ -3,15 +3,29 @@ import Logo from '../../components/logo/logo';
 import Copyright from '../../components/copyright/copyright';
 import UserBlock from '../../components/user-block/user-block';
 import GenreList from '../../components/genre-list/genre-list';
+import ShowMoreButton from '../../components/show-more-button/show-more-button';
 import { useAppSelector } from '../../hooks/index';
+import { useState } from 'react';
+import { FILMS_RENDERING_STEP, ALL_GENRES } from '../../const';
 
 function Main(): JSX.Element {
   const { promoFilm, films, currentGenre } = useAppSelector((state) => state);
   let filteredFilms = films;
+  const [ renderedFilmsCount, setRenderedFilmsCount ] = useState(FILMS_RENDERING_STEP);
 
-  if (currentGenre !== 'All genres') {
-    filteredFilms = films.filter((film) => film.genre === currentGenre);
+  if (currentGenre !== ALL_GENRES) {
+    filteredFilms = [...films].filter((film) => film.genre === currentGenre);
   }
+
+  const handleShowMoreButtonClick = () => {
+    setRenderedFilmsCount(renderedFilmsCount + FILMS_RENDERING_STEP);
+  };
+
+  const resetFilmsCount = () => {
+    setRenderedFilmsCount(FILMS_RENDERING_STEP);
+  };
+
+  const filmsToRender = [...filteredFilms].slice(0, renderedFilmsCount);
 
   return (
     <>
@@ -65,13 +79,11 @@ function Main(): JSX.Element {
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-          <GenreList films={films}/>
+          <GenreList films={films} resetFilmsCount={resetFilmsCount}/>
 
-          <FilmCardList films={filteredFilms}/>
+          <FilmCardList films={filmsToRender}/>
 
-          <div className="catalog__more">
-            <button className="catalog__button" type="button">Show more</button>
-          </div>
+          {filteredFilms.length > renderedFilmsCount && <ShowMoreButton onButtonClick={handleShowMoreButtonClick}/>}
         </section>
 
         <footer className="page-footer">

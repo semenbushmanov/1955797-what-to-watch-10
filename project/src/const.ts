@@ -13,7 +13,12 @@ export enum AuthorizationStatus {
   Unknown = 'UNKNOWN',
 }
 
+export enum APIRoute {
+  Films = '/films',
+}
+
 export const FILMS_RENDERING_STEP = 8;
 export const ALL_GENRES = 'All genres';
 export const START_VIDEO_TIMEOUT = 1000;
 export const MINS_IN_HOUR = 60;
+export const TIMEOUT_SHOW_ERROR = 2000;

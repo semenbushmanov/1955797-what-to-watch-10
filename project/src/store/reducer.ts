@@ -1,23 +1,29 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { getFilms, getPromoFilm, changeGenre, getFilm, getFavoriteFilms, getComments } from './action';
+import { getFilms, getPromoFilm, changeGenre, getFilm, getFavoriteFilms, getComments, setError, setDataLoadingStatus } from './action';
 import { films, promoFilm } from '../mocks/films';
 import { comments } from '../mocks/comments';
 import { Film, Films, Comments } from '../types/film';
 
-const initialState: {
+type InitialState = {
   currentGenre: string;
   films: Films;
   promoFilm: Film;
   favoriteFilms: Films;
   film: Film;
   comments: Comments;
-} = {
+  isDataLoading: boolean;
+  error: string | null;
+}
+
+const initialState: InitialState = {
   currentGenre: 'All genres',
-  films,
+  films: [],
   promoFilm,
   favoriteFilms: films,
   film: films[3],
   comments,
+  isDataLoading: false,
+  error: null,
 };
 
 export const reducer = createReducer(initialState, (builder) => {
@@ -25,8 +31,8 @@ export const reducer = createReducer(initialState, (builder) => {
     .addCase(changeGenre, (state, action) => {
       state.currentGenre = action.payload;
     })
-    .addCase(getFilms, (state) => {
-      state.films = films;
+    .addCase(getFilms, (state, action) => {
+      state.films = action.payload;
     })
     .addCase(getPromoFilm, (state) => {
       state.promoFilm = promoFilm;
@@ -39,5 +45,11 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(getFavoriteFilms, (state) => {
       state.favoriteFilms = films;
+    })
+    .addCase(setError, (state, action) => {
+      state.error = action.payload;
+    })
+    .addCase(setDataLoadingStatus, (state, action) => {
+      state.isDataLoading = action.payload;
     });
 });

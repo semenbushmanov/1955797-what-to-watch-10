@@ -4,8 +4,9 @@ import App from './components/app/app';
 import ErrorMessage from './components/error-message/error-message';
 import { Provider } from 'react-redux';
 import { store } from './store/index';
-import { fetchFilmsAction } from './store/api-actions';
+import { fetchFilmsAction, checkAuthAction } from './store/api-actions';
 
+store.dispatch(checkAuthAction());
 store.dispatch(fetchFilmsAction());
 
 const root = ReactDOM.createRoot(

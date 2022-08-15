@@ -11,10 +11,14 @@ import PageNotFound from '../../pages/page-not-found/page-not-found';
 import PrivateRoute from '../private-route/private-route';
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
 
-function App(): JSX.Element {
-  const { isDataLoading } = useAppSelector((state) => state);
+const isAuthChecked = (authorizationStatus: AuthorizationStatus): boolean =>
+  authorizationStatus === AuthorizationStatus.Unknown;
 
-  if (isDataLoading) {
+function App(): JSX.Element {
+  const { isDataLoading, authorizationStatus } = useAppSelector((state) => state);
+
+
+  if (isDataLoading || isAuthChecked(authorizationStatus)) {
     return (
       <LoadingScreen />
     );
@@ -37,7 +41,7 @@ function App(): JSX.Element {
           path={AppRoute.MyList}
           element={
             <PrivateRoute
-              authorizationStatus={AuthorizationStatus.Auth}
+              authorizationStatus={authorizationStatus}
             >
               <MyList />
             </PrivateRoute>

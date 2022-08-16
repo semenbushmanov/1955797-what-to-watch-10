@@ -1,18 +1,15 @@
 import Logo from '../../components/logo/logo';
 import Copyright from '../../components/copyright/copyright';
 import { useRef, FormEvent } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../hooks';
 import { loginAction } from '../../store/api-actions';
 import { AuthData } from '../../types/auth-data';
-import { AppRoute } from '../../const';
 
 function SignIn(): JSX.Element {
   const emailRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
 
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
 
   const onSubmit = (authData: AuthData) => {
     dispatch(loginAction(authData));
@@ -67,7 +64,6 @@ function SignIn(): JSX.Element {
             <button
               className="sign-in__btn"
               type="submit"
-              onClick={() => navigate(AppRoute.Main)}
             >
               Sign in
             </button>

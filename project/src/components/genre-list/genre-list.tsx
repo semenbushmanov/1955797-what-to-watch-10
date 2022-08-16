@@ -10,7 +10,7 @@ type GenreListProps = {
 }
 
 function GenreList({films, resetFilmsCount}: GenreListProps): JSX.Element {
-  const { currentGenre } = useAppSelector((state) => state);
+  const { currentGenre } = useAppSelector((state) => state.commonReducer);
   const genreListSet = new Set(films.map((film) => film.genre));
   const genreList = [...genreListSet];
   genreList.unshift(ALL_GENRES);

@@ -12,7 +12,7 @@ import PrivateRoute from '../private-route/private-route';
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
 
 function App(): JSX.Element {
-  const { isDataLoading } = useAppSelector((state) => state);
+  const isDataLoading = useAppSelector((state) => state.DATA.isDataLoading);
 
   if (isDataLoading) {
     return (

@@ -5,7 +5,7 @@ import FilmCardList from '../../components/film-card-list/film-card-list';
 import { useAppSelector } from '../../hooks/index';
 
 function MyList(): JSX.Element {
-  const { favoriteFilms } = useAppSelector((state) => state);
+  const favoriteFilms = useAppSelector((state) => state.commonReducer.favoriteFilms);
 
   return (
     <div className="user-page">

@@ -1,6 +1,7 @@
 import { store } from '../store/index';
 import { Films } from './film';
 import { AuthorizationStatus } from '../const';
+import { UserData } from './user-data';
 
 export type State = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
@@ -11,5 +12,6 @@ export type FilmsData = {
 };
 
 export type UserAuthorization = {
-  authorizationStatus: AuthorizationStatus
+  authorizationStatus: AuthorizationStatus,
+  userData: UserData | undefined,
 };

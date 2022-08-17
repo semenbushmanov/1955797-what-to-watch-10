@@ -45,6 +45,8 @@ function SignIn(): JSX.Element {
                 name="user-email"
                 id="user-email"
                 ref={emailRef}
+                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                required
               />
               <label className="sign-in__label visually-hidden" htmlFor="user-email">Email address</label>
             </div>
@@ -56,6 +58,8 @@ function SignIn(): JSX.Element {
                 name="user-password"
                 id="user-password"
                 ref={passwordRef}
+                pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{2,}$"
+                required
               />
               <label className="sign-in__label visually-hidden" htmlFor="user-password">Password</label>
             </div>

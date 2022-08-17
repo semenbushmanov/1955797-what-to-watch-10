@@ -6,6 +6,7 @@ import { comments } from '../mocks/comments';
 import { Film, Films, Comments } from '../types/film';
 import { NameSpace } from '../const';
 import { filmsData } from './films-data/films-data';
+import { AuthorizationStatus } from '../const';
 
 type InitialState = {
   currentGenre: string;
@@ -14,6 +15,7 @@ type InitialState = {
   film: Film;
   comments: Comments;
   error: string | null;
+  authorizationStatus: AuthorizationStatus;
 }
 
 const initialState: InitialState = {
@@ -23,6 +25,7 @@ const initialState: InitialState = {
   film: films[3],
   comments,
   error: null,
+  authorizationStatus: AuthorizationStatus.Unknown,
 };
 
 const commonReducer = createReducer(initialState, (builder) => {

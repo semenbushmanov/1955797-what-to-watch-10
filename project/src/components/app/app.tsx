@@ -18,7 +18,7 @@ const isAuthChecked = (authorizationStatus: AuthorizationStatus): boolean =>
 
 function App(): JSX.Element {
   const isDataLoading = useAppSelector((state) => state.DATA.isDataLoading);
-  const authorizationStatus = useAppSelector((state) => state.commonReducer.authorizationStatus);
+  const authorizationStatus = useAppSelector((state) => state.USER.authorizationStatus);
 
   if (isDataLoading || isAuthChecked(authorizationStatus)) {
     return (

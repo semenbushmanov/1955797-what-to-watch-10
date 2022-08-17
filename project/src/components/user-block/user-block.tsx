@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { logoutAction } from '../../store/api-actions';
 
 function UserBlock(): JSX.Element {
-  const { authorizationStatus } = useAppSelector((state) => state);
+  const authorizationStatus = useAppSelector((state) => state.USER.authorizationStatus);
   const dispatch = useAppDispatch();
 
   if ( authorizationStatus === AuthorizationStatus.Auth) {

@@ -1,12 +1,12 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { combineReducers } from '@reduxjs/toolkit';
-import { getPromoFilm, changeGenre, getFilm, getFavoriteFilms, getComments, setError } from './action';
+import { getPromoFilm, changeGenre, getFilm, getFavoriteFilms, getComments } from './action';
 import { films, promoFilm } from '../mocks/films';
 import { comments } from '../mocks/comments';
 import { Film, Films, Comments } from '../types/film';
 import { NameSpace } from '../const';
 import { filmsData } from './films-data/films-data';
-import { AuthorizationStatus } from '../const';
+import { userAuthorization } from './user-authorization/user-authorization';
 
 type InitialState = {
   currentGenre: string;
@@ -14,8 +14,6 @@ type InitialState = {
   favoriteFilms: Films;
   film: Film;
   comments: Comments;
-  error: string | null;
-  authorizationStatus: AuthorizationStatus;
 }
 
 const initialState: InitialState = {
@@ -24,8 +22,6 @@ const initialState: InitialState = {
   favoriteFilms: films,
   film: films[3],
   comments,
-  error: null,
-  authorizationStatus: AuthorizationStatus.Unknown,
 };
 
 const commonReducer = createReducer(initialState, (builder) => {
@@ -44,13 +40,11 @@ const commonReducer = createReducer(initialState, (builder) => {
     })
     .addCase(getFavoriteFilms, (state) => {
       state.favoriteFilms = films;
-    })
-    .addCase(setError, (state, action) => {
-      state.error = action.payload;
     });
 });
 
 export const reducer = combineReducers({
   [NameSpace.Data]: filmsData.reducer,
+  [NameSpace.User]: userAuthorization.reducer,
   commonReducer,
 });

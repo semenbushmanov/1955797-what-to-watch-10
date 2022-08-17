@@ -4,7 +4,7 @@ import AddReviewForm from '../../components/add-review-form/add-review-form';
 import { useAppSelector } from '../../hooks/index';
 
 function AddReview(): JSX.Element {
-  const { film } = useAppSelector((state) => state);
+  const film = useAppSelector((state) => state.commonReducer.film);
   const {name, backgroundImage, previewImage} = film;
 
   return (

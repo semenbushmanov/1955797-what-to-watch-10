@@ -9,7 +9,8 @@ import { Link } from 'react-router-dom';
 import { useAppSelector } from '../../hooks/index';
 
 function FilmPage(): JSX.Element {
-  const { films, comments } = useAppSelector((state) => state);
+  const films = useAppSelector((state) => state.DATA.films);
+  const comments = useAppSelector((state) => state.commonReducer.comments);
   const { id } = useParams();
   const film = films.find((item) => item.id.toString() === id);
 

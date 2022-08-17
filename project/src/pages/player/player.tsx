@@ -1,7 +1,7 @@
 import { useAppSelector } from '../../hooks/index';
 
 function Player(): JSX.Element {
-  const { film } = useAppSelector((state) => state);
+  const film = useAppSelector((state) => state.commonReducer.film);
   const {name, posterImage, videoLink} = film;
 
 

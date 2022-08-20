@@ -16,7 +16,7 @@ function AddReviewForm(): JSX.Element {
 
   return (
     <div className="add-review">
-      <form action="#" className="add-review__form">
+      <form action="" className="add-review__form">
         <div className="rating">
           <div className="rating__stars">
             {ratingStarsArray.map((rating) =>

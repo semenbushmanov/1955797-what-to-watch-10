@@ -12,6 +12,7 @@ export type FilmsData = {
   isFilmLoading: boolean,
   promoFilm: Film,
   film: Film | undefined,
+  similarFilms: Films,
 };
 
 export type UserAuthorization = {

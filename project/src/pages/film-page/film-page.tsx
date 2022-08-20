@@ -8,7 +8,7 @@ import LoadingScreen from '../loading-screen/loading-screen';
 import { useParams, Link } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useAppSelector, useAppDispatch } from '../../hooks/index';
-import { fetchFilmAction } from '../../store/api-actions';
+import { fetchFilmAction, fetchSimilarFilmsAction } from '../../store/api-actions';
 
 function FilmPage(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -16,11 +16,12 @@ function FilmPage(): JSX.Element {
   const isFilmLoading = useAppSelector((state) => state.DATA.isFilmLoading);
   const film = useAppSelector((state) => state.DATA.film);
   const comments = useAppSelector((state) => state.commonReducer.comments);
-  const films = useAppSelector((state) => state.DATA.films);
+  const similarFilms = useAppSelector((state) => state.DATA.similarFilms);
 
   useEffect(() => {
     if (id) {
       dispatch(fetchFilmAction(id));
+      dispatch(fetchSimilarFilmsAction(id));
     }
   }, [id, dispatch]);
 
@@ -82,7 +83,7 @@ function FilmPage(): JSX.Element {
       </section>
 
       <div className="page-content">
-        <MoreLikeThis films={films} genre={film.genre}/>
+        <MoreLikeThis films={similarFilms}/>
 
         <footer className="page-footer">
           <Logo logoStyle='light'/>

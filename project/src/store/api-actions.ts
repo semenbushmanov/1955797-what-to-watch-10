@@ -44,6 +44,18 @@ export const fetchFilmAction = createAsyncThunk<Film, string, {
   },
 );
 
+export const fetchSimilarFilmsAction = createAsyncThunk<Films, string, {
+  dispatch: AppDispatch,
+  state: State,
+  extra: AxiosInstance
+}>(
+  'data/fetchSimilarFilms',
+  async (id, {dispatch, extra: api}) => {
+    const {data} = await api.get<Films>(`${APIRoute.Films}/${id}/similar`);
+    return data;
+  },
+);
+
 export const checkAuthAction = createAsyncThunk<UserData, undefined, {
   dispatch: AppDispatch,
   state: State,

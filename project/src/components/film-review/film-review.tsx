@@ -1,4 +1,5 @@
 import { Comment } from '../../types/film';
+import dayjs from 'dayjs';
 
 type FilmReviewProps = {
   comment: Comment;
@@ -12,7 +13,7 @@ function FilmReview({comment}: FilmReviewProps): JSX.Element {
 
         <footer className="review__details">
           <cite className="review__author">{comment.user.name}</cite>
-          <time className="review__date" dateTime="2016-12-24">{comment.date}</time>
+          <time className="review__date" dateTime={comment.date}>{dayjs(comment.date).format('MMMM D, YYYY')}</time>
         </footer>
       </blockquote>
 

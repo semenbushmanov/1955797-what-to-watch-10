@@ -8,7 +8,7 @@ type FilmReviewsProps = {
 const NUMBER_OF_COLUMNS = 2;
 
 function FilmReviews({comments}: FilmReviewsProps): JSX.Element {
-  const commentsNumberInColumn = Math.floor(comments.length / NUMBER_OF_COLUMNS);
+  const commentsNumberInColumn = Math.ceil(comments.length / NUMBER_OF_COLUMNS);
 
   const firstColumnComments = [...comments].slice(0, commentsNumberInColumn);
   const secondColumnComments = [...comments].slice(commentsNumberInColumn, comments.length);

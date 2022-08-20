@@ -1,10 +1,16 @@
 import Logo from '../../components/logo/logo';
 import UserBlock from '../../components/user-block/user-block';
 import AddReviewForm from '../../components/add-review-form/add-review-form';
+import PageNotFound from '../page-not-found/page-not-found';
 import { useAppSelector } from '../../hooks/index';
 
 function AddReview(): JSX.Element {
-  const film = useAppSelector((state) => state.commonReducer.film);
+  const film = useAppSelector((state) => state.DATA.film);
+
+  if (!film) {
+    return <PageNotFound />;
+  }
+
   const {name, backgroundImage, previewImage} = film;
 
   return (

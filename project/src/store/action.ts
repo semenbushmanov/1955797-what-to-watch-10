@@ -10,8 +10,4 @@ export const getComments = createAction(
   'data/getComments',
   (value) => ({payload: value,})
 );
-export const getFilm = createAction(
-  'data/getFilm',
-  (value) => ({payload: value,})
-);
 export const redirectToRoute = createAction<AppRoute>('app/redirectToRoute');

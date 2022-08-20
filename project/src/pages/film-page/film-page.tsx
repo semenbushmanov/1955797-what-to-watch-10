@@ -8,20 +8,21 @@ import LoadingScreen from '../loading-screen/loading-screen';
 import { useParams, Link } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useAppSelector, useAppDispatch } from '../../hooks/index';
-import { fetchFilmAction, fetchSimilarFilmsAction } from '../../store/api-actions';
+import { fetchFilmAction, fetchSimilarFilmsAction, fetchFilmCommentsAction } from '../../store/api-actions';
 
 function FilmPage(): JSX.Element {
   const dispatch = useAppDispatch();
   const { id } = useParams();
   const isFilmLoading = useAppSelector((state) => state.DATA.isFilmLoading);
   const film = useAppSelector((state) => state.DATA.film);
-  const comments = useAppSelector((state) => state.commonReducer.comments);
+  const comments = useAppSelector((state) => state.DATA.comments);
   const similarFilms = useAppSelector((state) => state.DATA.similarFilms);
 
   useEffect(() => {
     if (id) {
       dispatch(fetchFilmAction(id));
       dispatch(fetchSimilarFilmsAction(id));
+      dispatch(fetchFilmCommentsAction(id));
     }
   }, [id, dispatch]);
 

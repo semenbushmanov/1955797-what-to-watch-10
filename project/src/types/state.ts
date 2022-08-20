@@ -1,5 +1,5 @@
 import { store } from '../store/index';
-import { Film, Films } from './film';
+import { Film, Films, Comments } from './film';
 import { AuthorizationStatus } from '../const';
 import { UserData } from './user-data';
 
@@ -13,6 +13,7 @@ export type FilmsData = {
   promoFilm: Film,
   film: Film | undefined,
   similarFilms: Films,
+  comments: Comments,
 };
 
 export type UserAuthorization = {

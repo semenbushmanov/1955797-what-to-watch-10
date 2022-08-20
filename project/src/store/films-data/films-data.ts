@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { NameSpace } from '../../const';
 import { FilmsData } from '../../types/state';
 import { Film } from '../../types/film';
-import { fetchFilmsAction, fetchPromoFilmAction, fetchFilmAction, fetchSimilarFilmsAction } from '../api-actions';
+import { fetchFilmsAction, fetchPromoFilmAction, fetchFilmAction, fetchSimilarFilmsAction, fetchFilmCommentsAction } from '../api-actions';
 
 const initialState: FilmsData = {
   films: [],
@@ -11,6 +11,7 @@ const initialState: FilmsData = {
   promoFilm: {} as Film,
   film: undefined,
   similarFilms: [],
+  comments: [],
 };
 
 export const filmsData = createSlice({
@@ -45,6 +46,12 @@ export const filmsData = createSlice({
       })
       .addCase(fetchSimilarFilmsAction.rejected, (state) => {
         state.similarFilms = [];
+      })
+      .addCase(fetchFilmCommentsAction.fulfilled, (state, action) => {
+        state.comments = action.payload;
+      })
+      .addCase(fetchFilmCommentsAction.rejected, (state) => {
+        state.comments = [];
       });
   }
 });

@@ -1,7 +1,7 @@
 import { AxiosInstance } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AppDispatch, State } from '../types/state';
-import { Film, Films } from '../types/film';
+import { Film, Films, Comments } from '../types/film';
 import { redirectToRoute } from './action';
 import { saveToken, dropToken } from '../services/token';
 import { APIRoute, AppRoute } from '../const';
@@ -52,6 +52,18 @@ export const fetchSimilarFilmsAction = createAsyncThunk<Films, string, {
   'data/fetchSimilarFilms',
   async (id, {dispatch, extra: api}) => {
     const {data} = await api.get<Films>(`${APIRoute.Films}/${id}/similar`);
+    return data;
+  },
+);
+
+export const fetchFilmCommentsAction = createAsyncThunk<Comments, string, {
+  dispatch: AppDispatch,
+  state: State,
+  extra: AxiosInstance
+}>(
+  'data/fetchFilmComments',
+  async (id, {dispatch, extra: api}) => {
+    const {data} = await api.get<Comments>(`${APIRoute.Comments}/${id}`);
     return data;
   },
 );

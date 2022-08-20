@@ -19,6 +19,7 @@ export enum APIRoute {
   Logout = '/logout',
   Promo = '/promo',
   NotFound = '/404',
+  Comments = '/comments',
 }
 
 export enum NameSpace {

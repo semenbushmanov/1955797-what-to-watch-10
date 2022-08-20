@@ -6,8 +6,4 @@ export const changeGenre = createAction(
   (value) => ({payload: value,})
 );
 export const getFavoriteFilms = createAction('data/getFavoriteFilms');
-export const getComments = createAction(
-  'data/getComments',
-  (value) => ({payload: value,})
-);
 export const redirectToRoute = createAction<AppRoute>('app/redirectToRoute');

@@ -68,6 +68,18 @@ export const fetchFilmCommentsAction = createAsyncThunk<Comments, string, {
   },
 );
 
+export const fetchFavoriteFilmsAction = createAsyncThunk<Films, undefined, {
+  dispatch: AppDispatch,
+  state: State,
+  extra: AxiosInstance
+}>(
+  'data/fetchFavoriteFilms',
+  async (_arg, {dispatch, extra: api}) => {
+    const {data} = await api.get<Films>(APIRoute.Favorite);
+    return data;
+  },
+);
+
 export const checkAuthAction = createAsyncThunk<UserData, undefined, {
   dispatch: AppDispatch,
   state: State,

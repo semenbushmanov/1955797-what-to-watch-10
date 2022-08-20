@@ -5,5 +5,4 @@ export const changeGenre = createAction(
   'film/changeGenre',
   (value) => ({payload: value,})
 );
-export const getFavoriteFilms = createAction('data/getFavoriteFilms');
 export const redirectToRoute = createAction<AppRoute>('app/redirectToRoute');

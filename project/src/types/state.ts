@@ -8,12 +8,14 @@ export type AppDispatch = typeof store.dispatch;
 
 export type FilmsData = {
   films: Films,
-  isDataLoading: boolean,
-  isFilmLoading: boolean,
   promoFilm: Film,
   film: Film | undefined,
   similarFilms: Films,
   comments: Comments,
+  favoriteFilms: Films,
+  isDataLoading: boolean,
+  isFilmLoading: boolean,
+  areFavoriteFilmsLoading: boolean,
 };
 
 export type UserAuthorization = {

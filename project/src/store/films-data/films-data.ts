@@ -2,16 +2,18 @@ import { createSlice } from '@reduxjs/toolkit';
 import { NameSpace } from '../../const';
 import { FilmsData } from '../../types/state';
 import { Film } from '../../types/film';
-import { fetchFilmsAction, fetchPromoFilmAction, fetchFilmAction, fetchSimilarFilmsAction, fetchFilmCommentsAction } from '../api-actions';
+import { fetchFilmsAction, fetchPromoFilmAction, fetchFilmAction, fetchSimilarFilmsAction, fetchFilmCommentsAction, fetchFavoriteFilmsAction } from '../api-actions';
 
 const initialState: FilmsData = {
   films: [],
-  isDataLoading:false,
-  isFilmLoading: false,
   promoFilm: {} as Film,
   film: undefined,
   similarFilms: [],
   comments: [],
+  favoriteFilms: [],
+  isDataLoading:false,
+  isFilmLoading: false,
+  areFavoriteFilmsLoading: false,
 };
 
 export const filmsData = createSlice({
@@ -52,6 +54,17 @@ export const filmsData = createSlice({
       })
       .addCase(fetchFilmCommentsAction.rejected, (state) => {
         state.comments = [];
+      })
+      .addCase(fetchFavoriteFilmsAction.pending, (state) => {
+        state.areFavoriteFilmsLoading = true;
+      })
+      .addCase(fetchFavoriteFilmsAction.fulfilled, (state, action) => {
+        state.favoriteFilms = action.payload;
+        state.areFavoriteFilmsLoading = false;
+      })
+      .addCase(fetchFavoriteFilmsAction.rejected, (state) => {
+        state.areFavoriteFilmsLoading = false;
+        state.favoriteFilms = [];
       });
   }
 });

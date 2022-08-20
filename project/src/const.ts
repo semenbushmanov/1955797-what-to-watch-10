@@ -20,6 +20,7 @@ export enum APIRoute {
   Promo = '/promo',
   NotFound = '/404',
   Comments = '/comments',
+  Favorite = '/favorite',
 }
 
 export enum NameSpace {

@@ -16,6 +16,7 @@ export type FilmsData = {
   isDataLoading: boolean,
   isFilmLoading: boolean,
   areFavoriteFilmsLoading: boolean,
+  isCommentBeingPosted: boolean,
 };
 
 export type UserAuthorization = {

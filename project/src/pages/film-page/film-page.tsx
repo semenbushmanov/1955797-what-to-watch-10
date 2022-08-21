@@ -9,6 +9,7 @@ import { useParams, Link } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useAppSelector, useAppDispatch } from '../../hooks/index';
 import { fetchFilmAction, fetchSimilarFilmsAction, fetchFilmCommentsAction } from '../../store/api-actions';
+import { AuthorizationStatus } from '../../const';
 
 function FilmPage(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -17,6 +18,7 @@ function FilmPage(): JSX.Element {
   const film = useAppSelector((state) => state.DATA.film);
   const comments = useAppSelector((state) => state.DATA.comments);
   const similarFilms = useAppSelector((state) => state.DATA.similarFilms);
+  const authorizationStatus = useAppSelector((state) => state.USER.authorizationStatus);
 
   useEffect(() => {
     if (id) {
@@ -74,7 +76,7 @@ function FilmPage(): JSX.Element {
                   <span>My list</span>
                   <span className="film-card__count">9</span>
                 </button>
-                <Link to={`/films/${film.id}/review`} className="btn film-card__button">Add review</Link>
+                {authorizationStatus === AuthorizationStatus.Auth && <Link to={`/films/${film.id}/review`} className="btn film-card__button">Add review</Link>}
               </div>
             </div>
           </div>

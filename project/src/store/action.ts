@@ -5,4 +5,4 @@ export const changeGenre = createAction(
   'film/changeGenre',
   (value) => ({payload: value,})
 );
-export const redirectToRoute = createAction<AppRoute>('app/redirectToRoute');
+export const redirectToRoute = createAction<AppRoute | string>('app/redirectToRoute');

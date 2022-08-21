@@ -16,10 +16,10 @@ function FilmReviews({comments}: FilmReviewsProps): JSX.Element {
   return (
     <div className="film-card__reviews film-card__row">
       <div className="film-card__reviews-col">
-        {firstColumnComments.map((comment) => (<FilmReview key={comment.user.id} comment={comment}/>))}
+        {firstColumnComments.map((comment) => (<FilmReview key={comment.id} comment={comment}/>))}
       </div>
       <div className="film-card__reviews-col">
-        {secondColumnComments.map((comment) => (<FilmReview key={comment.user.id} comment={comment}/>))}
+        {secondColumnComments.map((comment) => (<FilmReview key={comment.id} comment={comment}/>))}
       </div>
     </div>
   );

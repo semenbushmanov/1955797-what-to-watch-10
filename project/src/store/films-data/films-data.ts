@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { NameSpace } from '../../const';
 import { FilmsData } from '../../types/state';
 import { Film } from '../../types/film';
-import { fetchFilmsAction, fetchPromoFilmAction, fetchFilmAction, fetchSimilarFilmsAction, fetchFilmCommentsAction, fetchFavoriteFilmsAction } from '../api-actions';
+import { fetchFilmsAction, fetchPromoFilmAction, fetchFilmAction, fetchSimilarFilmsAction, fetchFilmCommentsAction, fetchFavoriteFilmsAction, postCommentAction } from '../api-actions';
 
 const initialState: FilmsData = {
   films: [],
@@ -14,6 +14,7 @@ const initialState: FilmsData = {
   isDataLoading:false,
   isFilmLoading: false,
   areFavoriteFilmsLoading: false,
+  isCommentBeingPosted: false,
 };
 
 export const filmsData = createSlice({
@@ -65,6 +66,16 @@ export const filmsData = createSlice({
       .addCase(fetchFavoriteFilmsAction.rejected, (state) => {
         state.areFavoriteFilmsLoading = false;
         state.favoriteFilms = [];
+      })
+      .addCase(postCommentAction.pending, (state) => {
+        state.isCommentBeingPosted = true;
+      })
+      .addCase(postCommentAction.fulfilled, (state, action) => {
+        state.comments = action.payload;
+        state.isCommentBeingPosted = false;
+      })
+      .addCase(postCommentAction.rejected, (state) => {
+        state.isCommentBeingPosted = false;
       });
   }
 });

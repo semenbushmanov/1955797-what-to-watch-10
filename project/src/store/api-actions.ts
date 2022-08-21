@@ -1,7 +1,7 @@
 import { AxiosInstance } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AppDispatch, State } from '../types/state';
-import { Film, Films, Comments } from '../types/film';
+import { Film, Films, UserComment, Comments } from '../types/film';
 import { redirectToRoute } from './action';
 import { saveToken, dropToken } from '../services/token';
 import { APIRoute, AppRoute } from '../const';
@@ -76,6 +76,19 @@ export const fetchFavoriteFilmsAction = createAsyncThunk<Films, undefined, {
   'data/fetchFavoriteFilms',
   async (_arg, {dispatch, extra: api}) => {
     const {data} = await api.get<Films>(APIRoute.Favorite);
+    return data;
+  },
+);
+
+export const postCommentAction = createAsyncThunk<Comments, {filmId: string, comment: UserComment}, {
+  dispatch: AppDispatch,
+  state: State,
+  extra: AxiosInstance
+}>(
+  'data/postComment',
+  async ({filmId, comment}, {dispatch, extra: api}) => {
+    const {data} = await api.post<Comments>(`${APIRoute.Comments}/${filmId}`, comment);
+    dispatch(redirectToRoute(`/films/${filmId}/reviews`));
     return data;
   },
 );

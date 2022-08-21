@@ -3,6 +3,7 @@ import UserBlock from '../../components/user-block/user-block';
 import AddReviewForm from '../../components/add-review-form/add-review-form';
 import PageNotFound from '../page-not-found/page-not-found';
 import { useAppSelector } from '../../hooks/index';
+import { Link } from 'react-router-dom';
 
 function AddReview(): JSX.Element {
   const film = useAppSelector((state) => state.DATA.film);
@@ -11,7 +12,7 @@ function AddReview(): JSX.Element {
     return <PageNotFound />;
   }
 
-  const {name, backgroundImage, previewImage} = film;
+  const {id, name, backgroundImage, previewImage} = film;
 
   return (
     <section className="film-card film-card--full">
@@ -28,10 +29,10 @@ function AddReview(): JSX.Element {
           <nav className="breadcrumbs">
             <ul className="breadcrumbs__list">
               <li className="breadcrumbs__item">
-                <a href="film-page.html" className="breadcrumbs__link">{name}</a>
+                <Link to={`/films/${id}`} className="breadcrumbs__link">{name}</Link>
               </li>
               <li className="breadcrumbs__item">
-                <a href="#todo" className="breadcrumbs__link">Add review</a>
+                <Link to={`/films/${id}/review`} className="breadcrumbs__link">Add review</Link>
               </li>
             </ul>
           </nav>

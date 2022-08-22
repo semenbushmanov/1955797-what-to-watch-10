@@ -17,11 +17,20 @@ export enum APIRoute {
   Films = '/films',
   Login = '/login',
   Logout = '/logout',
+  Promo = '/promo',
+  NotFound = '/404',
+  Comments = '/comments',
+  Favorite = '/favorite',
 }
 
 export enum NameSpace {
   Data = 'DATA',
   User = 'USER',
+}
+
+export enum ReviewTextLength {
+  Min = 50,
+  Max = 400,
 }
 
 export const FILMS_RENDERING_STEP = 8;

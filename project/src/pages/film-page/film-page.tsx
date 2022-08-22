@@ -4,15 +4,35 @@ import UserBlock from '../../components/user-block/user-block';
 import PageNotFound from '../page-not-found/page-not-found';
 import Tabs from '../../components/tabs/tabs';
 import MoreLikeThis from '../../components/more-like-this/more-like-this';
-import { useParams } from 'react-router-dom';
-import { Link } from 'react-router-dom';
-import { useAppSelector } from '../../hooks/index';
+import LoadingScreen from '../loading-screen/loading-screen';
+import { useParams, Link } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useAppSelector, useAppDispatch } from '../../hooks/index';
+import { fetchFilmAction, fetchSimilarFilmsAction, fetchFilmCommentsAction } from '../../store/api-actions';
+import { AuthorizationStatus } from '../../const';
 
 function FilmPage(): JSX.Element {
-  const films = useAppSelector((state) => state.DATA.films);
-  const comments = useAppSelector((state) => state.commonReducer.comments);
+  const dispatch = useAppDispatch();
   const { id } = useParams();
-  const film = films.find((item) => item.id.toString() === id);
+  const isFilmLoading = useAppSelector((state) => state.DATA.isFilmLoading);
+  const film = useAppSelector((state) => state.DATA.film);
+  const comments = useAppSelector((state) => state.DATA.comments);
+  const similarFilms = useAppSelector((state) => state.DATA.similarFilms);
+  const authorizationStatus = useAppSelector((state) => state.USER.authorizationStatus);
+
+  useEffect(() => {
+    if (id) {
+      dispatch(fetchFilmAction(id));
+      dispatch(fetchSimilarFilmsAction(id));
+      dispatch(fetchFilmCommentsAction(id));
+    }
+  }, [id, dispatch]);
+
+  if (isFilmLoading) {
+    return (
+      <LoadingScreen />
+    );
+  }
 
   if (!film) {
     return <PageNotFound />;
@@ -56,7 +76,7 @@ function FilmPage(): JSX.Element {
                   <span>My list</span>
                   <span className="film-card__count">9</span>
                 </button>
-                <Link to={`/films/${film.id}/review`} className="btn film-card__button">Add review</Link>
+                {authorizationStatus === AuthorizationStatus.Auth && <Link to={`/films/${film.id}/review`} className="btn film-card__button">Add review</Link>}
               </div>
             </div>
           </div>
@@ -66,7 +86,7 @@ function FilmPage(): JSX.Element {
       </section>
 
       <div className="page-content">
-        <MoreLikeThis films={films} genre={film.genre}/>
+        <MoreLikeThis films={similarFilms}/>
 
         <footer className="page-footer">
           <Logo logoStyle='light'/>

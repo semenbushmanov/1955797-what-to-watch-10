@@ -9,7 +9,8 @@ import { useState } from 'react';
 import { FILMS_RENDERING_STEP, ALL_GENRES } from '../../const';
 
 function Main(): JSX.Element {
-  const { promoFilm, currentGenre } = useAppSelector((state) => state.commonReducer);
+  const { currentGenre } = useAppSelector((state) => state.commonReducer);
+  const promoFilm = useAppSelector((state) => state.DATA.promoFilm);
   const films = useAppSelector((state) => state.DATA.films);
   let filteredFilms = films;
   const [ renderedFilmsCount, setRenderedFilmsCount ] = useState(FILMS_RENDERING_STEP);

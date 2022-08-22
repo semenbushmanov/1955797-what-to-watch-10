@@ -29,7 +29,7 @@ function GenreList({films, resetFilmsCount}: GenreListProps): JSX.Element {
           className={genre === currentGenre ? 'catalog__genres-item catalog__genres-item--active' : 'catalog__genres-item'}
           onClick={() => handleGenreChange(genre)}
         >
-          <Link to="#" className="catalog__genres-link">{genre}</Link>
+          <Link to="" className="catalog__genres-link">{genre}</Link>
         </li>
       ))}
     </ul>

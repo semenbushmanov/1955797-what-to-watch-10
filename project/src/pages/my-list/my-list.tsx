@@ -2,10 +2,25 @@ import Logo from '../../components/logo/logo';
 import UserBlock from '../../components/user-block/user-block';
 import Copyright from '../../components/copyright/copyright';
 import FilmCardList from '../../components/film-card-list/film-card-list';
-import { useAppSelector } from '../../hooks/index';
+import LoadingScreen from '../loading-screen/loading-screen';
+import { useAppSelector, useAppDispatch } from '../../hooks/index';
+import { fetchFavoriteFilmsAction } from '../../store/api-actions';
+import { useEffect } from 'react';
 
 function MyList(): JSX.Element {
-  const favoriteFilms = useAppSelector((state) => state.commonReducer.favoriteFilms);
+  const dispatch = useAppDispatch();
+  const favoriteFilms = useAppSelector((state) => state.DATA.favoriteFilms);
+  const areFavoriteFilmsLoading = useAppSelector((state) => state.DATA.areFavoriteFilmsLoading);
+
+  useEffect(() => {
+    dispatch(fetchFavoriteFilmsAction());
+  }, [dispatch]);
+
+  if (areFavoriteFilmsLoading) {
+    return (
+      <LoadingScreen />
+    );
+  }
 
   return (
     <div className="user-page">

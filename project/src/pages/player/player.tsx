@@ -1,7 +1,13 @@
 import { useAppSelector } from '../../hooks/index';
+import PageNotFound from '../page-not-found/page-not-found';
 
 function Player(): JSX.Element {
-  const film = useAppSelector((state) => state.commonReducer.film);
+  const film = useAppSelector((state) => state.DATA.film);
+
+  if (!film) {
+    return <PageNotFound />;
+  }
+
   const {name, posterImage, videoLink} = film;
 
 

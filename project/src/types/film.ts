@@ -29,5 +29,10 @@ export type Comment = {
   }
 };
 
+export type UserComment = {
+  comment: string;
+  rating: number;
+};
+
 export type Films = Film[];
 export type Comments = Comment[];

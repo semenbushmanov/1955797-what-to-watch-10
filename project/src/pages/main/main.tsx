@@ -7,11 +7,13 @@ import ShowMoreButton from '../../components/show-more-button/show-more-button';
 import { useAppSelector } from '../../hooks/index';
 import { useState } from 'react';
 import { FILMS_RENDERING_STEP, ALL_GENRES } from '../../const';
+import { getCurrentGenre } from '../../store/app-process/selectors';
+import { getPromoFilm, getFilms } from '../../store/films-data/selectors';
 
 function Main(): JSX.Element {
-  const { currentGenre } = useAppSelector((state) => state.commonReducer);
-  const promoFilm = useAppSelector((state) => state.DATA.promoFilm);
-  const films = useAppSelector((state) => state.DATA.films);
+  const currentGenre = useAppSelector(getCurrentGenre);
+  const promoFilm = useAppSelector(getPromoFilm);
+  const films = useAppSelector(getFilms);
   let filteredFilms = films;
   const [ renderedFilmsCount, setRenderedFilmsCount ] = useState(FILMS_RENDERING_STEP);
 

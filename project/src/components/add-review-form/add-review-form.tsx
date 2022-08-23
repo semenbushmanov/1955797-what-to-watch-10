@@ -5,6 +5,7 @@ import { postCommentAction } from '../../store/api-actions';
 import { UserComment } from '../../types/film';
 import { useParams } from 'react-router-dom';
 import { ReviewTextLength } from '../../const';
+import { getCommentStatus } from '../../store/films-data/selectors';
 
 const RATING_STARS_NUMBER = 10;
 const INITIAL_RATING = 8;
@@ -12,7 +13,7 @@ const INITIAL_RATING = 8;
 function AddReviewForm(): JSX.Element {
   const dispatch = useAppDispatch();
   const { id } = useParams();
-  const isCommentBeingPosted = useAppSelector((state) => state.DATA.isCommentBeingPosted);
+  const isCommentBeingPosted = useAppSelector(getCommentStatus);
   const ratingStarsArray = [...Array(RATING_STARS_NUMBER).keys()].map((i) => ++i).reverse();
   const [currentRating, setRating] = useState(INITIAL_RATING);
   const [reviewText, setReviewText] = useState('');

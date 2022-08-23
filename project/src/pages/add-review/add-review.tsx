@@ -4,9 +4,10 @@ import AddReviewForm from '../../components/add-review-form/add-review-form';
 import PageNotFound from '../page-not-found/page-not-found';
 import { useAppSelector } from '../../hooks/index';
 import { Link } from 'react-router-dom';
+import { getFilm } from '../../store/films-data/selectors';
 
 function AddReview(): JSX.Element {
-  const film = useAppSelector((state) => state.DATA.film);
+  const film = useAppSelector(getFilm);
 
   if (!film) {
     return <PageNotFound />;

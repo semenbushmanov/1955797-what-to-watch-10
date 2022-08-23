@@ -10,15 +10,17 @@ import { useEffect } from 'react';
 import { useAppSelector, useAppDispatch } from '../../hooks/index';
 import { fetchFilmAction, fetchSimilarFilmsAction, fetchFilmCommentsAction } from '../../store/api-actions';
 import { AuthorizationStatus } from '../../const';
+import { getFilmLoadingStatus, getFilm, getComments, getSimilarFilms } from '../../store/films-data/selectors';
+import { getAuthorizationStatus } from '../../store/user-authorization/selectors';
 
 function FilmPage(): JSX.Element {
   const dispatch = useAppDispatch();
   const { id } = useParams();
-  const isFilmLoading = useAppSelector((state) => state.DATA.isFilmLoading);
-  const film = useAppSelector((state) => state.DATA.film);
-  const comments = useAppSelector((state) => state.DATA.comments);
-  const similarFilms = useAppSelector((state) => state.DATA.similarFilms);
-  const authorizationStatus = useAppSelector((state) => state.USER.authorizationStatus);
+  const isFilmLoading = useAppSelector(getFilmLoadingStatus);
+  const film = useAppSelector(getFilm);
+  const comments = useAppSelector(getComments);
+  const similarFilms = useAppSelector(getSimilarFilms);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   useEffect(() => {
     if (id) {

@@ -23,3 +23,7 @@ export type UserAuthorization = {
   authorizationStatus: AuthorizationStatus,
   userData: UserData | undefined,
 };
+
+export type AppProcess = {
+  currentGenre: string,
+};

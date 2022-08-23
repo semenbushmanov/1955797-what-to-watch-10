@@ -6,11 +6,12 @@ import LoadingScreen from '../loading-screen/loading-screen';
 import { useAppSelector, useAppDispatch } from '../../hooks/index';
 import { fetchFavoriteFilmsAction } from '../../store/api-actions';
 import { useEffect } from 'react';
+import { getFavoriteFilms, getFavoriteFilmsLoadingStatus } from '../../store/films-data/selectors';
 
 function MyList(): JSX.Element {
   const dispatch = useAppDispatch();
-  const favoriteFilms = useAppSelector((state) => state.DATA.favoriteFilms);
-  const areFavoriteFilmsLoading = useAppSelector((state) => state.DATA.areFavoriteFilmsLoading);
+  const favoriteFilms = useAppSelector(getFavoriteFilms);
+  const areFavoriteFilmsLoading = useAppSelector(getFavoriteFilmsLoadingStatus);
 
   useEffect(() => {
     dispatch(fetchFavoriteFilmsAction());

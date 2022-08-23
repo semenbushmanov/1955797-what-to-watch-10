@@ -1,8 +1,9 @@
 import { Films } from '../../types/film';
 import { useAppSelector, useAppDispatch } from '../../hooks/index';
-import { changeGenre } from '../../store/action';
+import { changeGenre } from '../../store/app-process/app-process';
 import { Link } from 'react-router-dom';
-import { ALL_GENRES } from '../../const';
+import { ALL_GENRES, GENRES_MAX_NUMBER } from '../../const';
+import { getCurrentGenre } from '../../store/app-process/selectors';
 
 type GenreListProps = {
   films: Films;
@@ -10,9 +11,9 @@ type GenreListProps = {
 }
 
 function GenreList({films, resetFilmsCount}: GenreListProps): JSX.Element {
-  const { currentGenre } = useAppSelector((state) => state.commonReducer);
+  const currentGenre = useAppSelector(getCurrentGenre);
   const genreListSet = new Set(films.map((film) => film.genre));
-  const genreList = [...genreListSet];
+  const genreList = [...genreListSet].slice(0, GENRES_MAX_NUMBER);
   genreList.unshift(ALL_GENRES);
   const dispatch = useAppDispatch();
 

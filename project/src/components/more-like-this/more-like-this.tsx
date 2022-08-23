@@ -1,14 +1,13 @@
-import { Films } from '../../types/film';
 import FilmCardList from '../film-card-list/film-card-list';
+import { Films } from '../../types/film';
+import { SIMILAR_FILMS_MAX_NUMBER } from '../../const';
 
 type MoreLikeThisProps = {
   films: Films;
 }
 
-const SIMILAR_FILMS_COUNT = 4;
-
 function MoreLikeThis({films}: MoreLikeThisProps): JSX.Element {
-  const similarFilms = [...films].slice(0, SIMILAR_FILMS_COUNT);
+  const similarFilms = [...films].slice(0, SIMILAR_FILMS_MAX_NUMBER);
 
   return (
     <section className="catalog catalog--like-this">

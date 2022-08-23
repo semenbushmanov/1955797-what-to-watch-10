@@ -1,6 +1,8 @@
 import { Route, Routes } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import { useAppSelector } from '../../hooks';
+import { getLoadingStatus } from '../../store/films-data/selectors';
+import { getAuthorizationStatus } from '../../store/user-authorization/selectors';
 import Main from '../../pages/main/main';
 import SignIn from '../../pages/sign-in/sign-in';
 import MyList from '../../pages/my-list/my-list';
@@ -17,8 +19,8 @@ const isAuthChecked = (authorizationStatus: AuthorizationStatus): boolean =>
   authorizationStatus === AuthorizationStatus.Unknown;
 
 function App(): JSX.Element {
-  const isDataLoading = useAppSelector((state) => state.DATA.isDataLoading);
-  const authorizationStatus = useAppSelector((state) => state.USER.authorizationStatus);
+  const isDataLoading = useAppSelector(getLoadingStatus);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   if (isDataLoading || isAuthChecked(authorizationStatus)) {
     return (

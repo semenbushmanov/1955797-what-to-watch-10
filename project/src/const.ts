@@ -26,6 +26,7 @@ export enum APIRoute {
 export enum NameSpace {
   Data = 'DATA',
   User = 'USER',
+  App = 'APP',
 }
 
 export enum ReviewTextLength {
@@ -37,3 +38,5 @@ export const FILMS_RENDERING_STEP = 8;
 export const ALL_GENRES = 'All genres';
 export const START_VIDEO_TIMEOUT = 1000;
 export const MINS_IN_HOUR = 60;
+export const GENRES_MAX_NUMBER = 9;
+export const SIMILAR_FILMS_MAX_NUMBER = 4;

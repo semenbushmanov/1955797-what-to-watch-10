@@ -6,11 +6,13 @@ import GenreList from '../../components/genre-list/genre-list';
 import ShowMoreButton from '../../components/show-more-button/show-more-button';
 import { useAppSelector } from '../../hooks/index';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { FILMS_RENDERING_STEP, ALL_GENRES } from '../../const';
 import { getCurrentGenre } from '../../store/app-process/selectors';
 import { getPromoFilm, getFilms } from '../../store/films-data/selectors';
 
 function Main(): JSX.Element {
+  const navigate = useNavigate();
   const currentGenre = useAppSelector(getCurrentGenre);
   const promoFilm = useAppSelector(getPromoFilm);
   const films = useAppSelector(getFilms);
@@ -23,6 +25,10 @@ function Main(): JSX.Element {
 
   const handleShowMoreButtonClick = () => {
     setRenderedFilmsCount(renderedFilmsCount + FILMS_RENDERING_STEP);
+  };
+
+  const handlePlayButtonClick = () => {
+    navigate(`/player/${promoFilm.id}`);
   };
 
   const resetFilmsCount = () => {
@@ -60,7 +66,7 @@ function Main(): JSX.Element {
               </p>
 
               <div className="film-card__buttons">
-                <button className="btn btn--play film-card__button" type="button">
+                <button className="btn btn--play film-card__button" type="button" onClick={handlePlayButtonClick}>
                   <svg viewBox="0 0 19 19" width="19" height="19">
                     <use xlinkHref="#play-s"></use>
                   </svg>

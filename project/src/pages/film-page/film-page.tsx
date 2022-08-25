@@ -5,7 +5,7 @@ import PageNotFound from '../page-not-found/page-not-found';
 import Tabs from '../../components/tabs/tabs';
 import MoreLikeThis from '../../components/more-like-this/more-like-this';
 import LoadingScreen from '../loading-screen/loading-screen';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useAppSelector, useAppDispatch } from '../../hooks/index';
 import { fetchFilmAction, fetchSimilarFilmsAction, fetchFilmCommentsAction } from '../../store/api-actions';
@@ -15,6 +15,7 @@ import { getAuthorizationStatus } from '../../store/user-authorization/selectors
 
 function FilmPage(): JSX.Element {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const { id } = useParams();
   const isFilmLoading = useAppSelector(getFilmLoadingStatus);
   const film = useAppSelector(getFilm);
@@ -39,6 +40,10 @@ function FilmPage(): JSX.Element {
   if (!film) {
     return <PageNotFound />;
   }
+
+  const handlePlayButtonClick = () => {
+    navigate(`/player/${id}`);
+  };
 
   return (
     <>
@@ -65,7 +70,7 @@ function FilmPage(): JSX.Element {
               </p>
 
               <div className="film-card__buttons">
-                <button className="btn btn--play film-card__button" type="button">
+                <button className="btn btn--play film-card__button" type="button" onClick={handlePlayButtonClick}>
                   <svg viewBox="0 0 19 19" width="19" height="19">
                     <use xlinkHref="#play-s"></use>
                   </svg>

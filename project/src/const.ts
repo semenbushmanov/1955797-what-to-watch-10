@@ -34,6 +34,11 @@ export enum ReviewTextLength {
   Max = 400,
 }
 
+export enum FavoriteStatus {
+  Add = 1,
+  Delete = 0,
+}
+
 export const FILMS_RENDERING_STEP = 8;
 export const ALL_GENRES = 'All genres';
 export const START_VIDEO_TIMEOUT = 1000;

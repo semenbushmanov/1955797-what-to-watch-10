@@ -2,17 +2,19 @@ import { createSlice } from '@reduxjs/toolkit';
 import { NameSpace } from '../../const';
 import { FilmsData } from '../../types/state';
 import { Film } from '../../types/film';
-import { fetchFilmsAction, fetchPromoFilmAction, fetchFilmAction, fetchSimilarFilmsAction, fetchFilmCommentsAction, fetchFavoriteFilmsAction, postCommentAction, updateFilmFavoriteStatusAction } from '../api-actions';
+import {
+  fetchFilmsAction,
+  fetchPromoFilmAction,
+  fetchFavoriteFilmsAction,
+  postCommentAction,
+  updateFilmFavoriteStatus
+} from '../api-actions';
 
 const initialState: FilmsData = {
   films: [],
   promoFilm: {} as Film,
-  film: undefined,
-  similarFilms: [],
-  comments: [],
   favoriteFilms: [],
   isDataLoading:false,
-  isFilmLoading: false,
   areFavoriteFilmsLoading: false,
   isCommentBeingPosted: false,
   isFilmBeingUpdated: false,
@@ -31,31 +33,11 @@ export const filmsData = createSlice({
         state.films = action.payload;
         state.isDataLoading = false;
       })
+      .addCase(fetchFilmsAction.rejected, (state) => {
+        state.isDataLoading = false;
+      })
       .addCase(fetchPromoFilmAction.fulfilled, (state, action) => {
         state.promoFilm = action.payload;
-      })
-      .addCase(fetchFilmAction.pending, (state) => {
-        state.isFilmLoading = true;
-      })
-      .addCase(fetchFilmAction.fulfilled, (state, action) => {
-        state.film = action.payload;
-        state.isFilmLoading = false;
-      })
-      .addCase(fetchFilmAction.rejected, (state) => {
-        state.isFilmLoading = false;
-        state.film = undefined;
-      })
-      .addCase(fetchSimilarFilmsAction.fulfilled, (state, action) => {
-        state.similarFilms = action.payload;
-      })
-      .addCase(fetchSimilarFilmsAction.rejected, (state) => {
-        state.similarFilms = [];
-      })
-      .addCase(fetchFilmCommentsAction.fulfilled, (state, action) => {
-        state.comments = action.payload;
-      })
-      .addCase(fetchFilmCommentsAction.rejected, (state) => {
-        state.comments = [];
       })
       .addCase(fetchFavoriteFilmsAction.pending, (state) => {
         state.areFavoriteFilmsLoading = true;
@@ -72,20 +54,18 @@ export const filmsData = createSlice({
         state.isCommentBeingPosted = true;
       })
       .addCase(postCommentAction.fulfilled, (state, action) => {
-        state.comments = action.payload;
         state.isCommentBeingPosted = false;
       })
       .addCase(postCommentAction.rejected, (state) => {
         state.isCommentBeingPosted = false;
       })
-      .addCase(updateFilmFavoriteStatusAction.pending, (state) => {
+      .addCase(updateFilmFavoriteStatus.pending, (state) => {
         state.isFilmBeingUpdated = true;
       })
-      .addCase(updateFilmFavoriteStatusAction.fulfilled, (state, action) => {
-        state.film = action.payload;
+      .addCase(updateFilmFavoriteStatus.fulfilled, (state) => {
         state.isFilmBeingUpdated = false;
       })
-      .addCase(updateFilmFavoriteStatusAction.rejected, (state) => {
+      .addCase(updateFilmFavoriteStatus.rejected, (state) => {
         state.isFilmBeingUpdated = false;
       });
   }

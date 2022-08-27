@@ -2,18 +2,24 @@ import Logo from '../../components/logo/logo';
 import UserBlock from '../../components/user-block/user-block';
 import AddReviewForm from '../../components/add-review-form/add-review-form';
 import PageNotFound from '../page-not-found/page-not-found';
-import { useAppSelector } from '../../hooks/index';
-import { Link } from 'react-router-dom';
-import { getFilm } from '../../store/films-data/selectors';
+import LoadingScreen from '../loading-screen/loading-screen';
+import { useFetchFilm } from '../../hooks/api-hooks/use-fetch-film';
+import { Link, useParams } from 'react-router-dom';
+import { RequestStatus } from '../../const';
 
 function AddReview(): JSX.Element {
-  const film = useAppSelector(getFilm);
+  const { id } = useParams();
+  const [film, status] = useFetchFilm(id);
 
-  if (!film) {
+  if (status === RequestStatus.Loading) {
+    return <LoadingScreen />;
+  }
+
+  if (!film || !id) {
     return <PageNotFound />;
   }
 
-  const {id, name, backgroundImage, previewImage} = film;
+  const {name, backgroundImage, previewImage} = film;
 
   return (
     <section className="film-card film-card--full">
@@ -46,7 +52,7 @@ function AddReview(): JSX.Element {
         </div>
       </div>
 
-      <AddReviewForm />
+      <AddReviewForm id={id}/>
 
     </section>
   );

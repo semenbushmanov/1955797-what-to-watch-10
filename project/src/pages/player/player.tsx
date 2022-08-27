@@ -1,23 +1,21 @@
 import PageNotFound from '../page-not-found/page-not-found';
-import { useAppSelector, useAppDispatch } from '../../hooks/index';
-import { fetchFilmAction } from '../../store/api-actions';
-import { getFilm } from '../../store/films-data/selectors';
+import LoadingScreen from '../loading-screen/loading-screen';
 import { useParams, useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useFetchFilm } from '../../hooks/api-hooks/use-fetch-film';
+import { RequestStatus } from '../../const';
 
 function Player(): JSX.Element {
-  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { id } = useParams();
-  const film = useAppSelector(getFilm);
+  const [film, status] = useFetchFilm(id);
 
-  useEffect(() => {
-    if (id) {
-      dispatch(fetchFilmAction(id));
-    }
-  }, [id, dispatch]);
+  if (status === RequestStatus.Loading) {
+    return (
+      <LoadingScreen />
+    );
+  }
 
-  if (!film) {
+  if (!film || !id) {
     return <PageNotFound />;
   }
 

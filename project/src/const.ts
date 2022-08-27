@@ -39,6 +39,13 @@ export enum FavoriteStatus {
   Delete = 0,
 }
 
+export enum RequestStatus {
+  NotStarted,
+  Loading,
+  Success,
+  Error,
+}
+
 export const FILMS_RENDERING_STEP = 8;
 export const ALL_GENRES = 'All genres';
 export const START_VIDEO_TIMEOUT = 1000;

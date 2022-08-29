@@ -7,7 +7,6 @@ import { ReviewTextLength } from '../../const';
 import { getCommentStatus } from '../../store/films-data/selectors';
 
 const RATING_STARS_NUMBER = 10;
-const INITIAL_RATING = 8;
 
 type AddReviewFormProps = {
   id: string;
@@ -17,7 +16,7 @@ function AddReviewForm({id}: AddReviewFormProps): JSX.Element {
   const dispatch = useAppDispatch();
   const isCommentBeingPosted = useAppSelector(getCommentStatus);
   const ratingStarsArray = [...Array(RATING_STARS_NUMBER).keys()].map((i) => ++i).reverse();
-  const [currentRating, setRating] = useState(INITIAL_RATING);
+  const [currentRating, setRating] = useState(0);
   const [reviewText, setReviewText] = useState('');
 
   const handleRatingChange = ({target}: ChangeEvent<HTMLInputElement>) => {
@@ -71,7 +70,11 @@ function AddReviewForm({id}: AddReviewFormProps): JSX.Element {
               <button
                 className="add-review__btn"
                 type="submit"
-                disabled={reviewText.length < ReviewTextLength.Min || reviewText.length > 400}
+                disabled={
+                  reviewText.length < ReviewTextLength.Min ||
+                  reviewText.length > ReviewTextLength.Max ||
+                  currentRating === 0
+                }
               >
                 {isCommentBeingPosted === true ? 'Posting' : 'Post'}
               </button>

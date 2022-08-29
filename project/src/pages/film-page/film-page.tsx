@@ -5,40 +5,62 @@ import PageNotFound from '../page-not-found/page-not-found';
 import Tabs from '../../components/tabs/tabs';
 import MoreLikeThis from '../../components/more-like-this/more-like-this';
 import LoadingScreen from '../loading-screen/loading-screen';
-import { useParams, Link } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../../hooks/index';
-import { fetchFilmAction, fetchSimilarFilmsAction, fetchFilmCommentsAction } from '../../store/api-actions';
-import { AuthorizationStatus } from '../../const';
-import { getFilmLoadingStatus, getFilm, getComments, getSimilarFilms } from '../../store/films-data/selectors';
+import { updateFilmFavoriteStatus } from '../../store/api-actions';
+import { AuthorizationStatus, AppRoute, RequestStatus, FavoriteStatus } from '../../const';
+import { getFilmUpdatingStatus, getFavoriteFilms } from '../../store/films-data/selectors';
 import { getAuthorizationStatus } from '../../store/user-authorization/selectors';
+import { useFetchFilm } from '../../hooks/api-hooks/use-fetch-film';
+import { useFetchFilmComments } from '../../hooks/api-hooks/use-fetch-comments';
+import { useFetchSimilarFilms } from '../../hooks/api-hooks/use-fetch-similar-films';
 
 function FilmPage(): JSX.Element {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const { id } = useParams();
-  const isFilmLoading = useAppSelector(getFilmLoadingStatus);
-  const film = useAppSelector(getFilm);
-  const comments = useAppSelector(getComments);
-  const similarFilms = useAppSelector(getSimilarFilms);
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const isFilmBeingUpdated = useAppSelector(getFilmUpdatingStatus);
+  const favoriteFilms = useAppSelector(getFavoriteFilms);
+  const favoriteFilmsCount = favoriteFilms.length;
+  const [film, status] = useFetchFilm(id);
+  const [comments] = useFetchFilmComments(id);
+  const [similarFilms] = useFetchSimilarFilms(id);
 
-  useEffect(() => {
-    if (id) {
-      dispatch(fetchFilmAction(id));
-      dispatch(fetchSimilarFilmsAction(id));
-      dispatch(fetchFilmCommentsAction(id));
-    }
-  }, [id, dispatch]);
-
-  if (isFilmLoading) {
+  if (status === RequestStatus.Loading) {
     return (
       <LoadingScreen />
     );
   }
 
-  if (!film) {
+  if (!film || !id) {
     return <PageNotFound />;
   }
+
+  const handlePlayButtonClick = () => {
+    navigate(`/player/${id}`);
+  };
+
+  const handleAddToFavoritesButtonClick = () => {
+    if (authorizationStatus !== AuthorizationStatus.Auth) {
+      navigate(AppRoute.SignIn);
+      return;
+    }
+
+    if (!isFilmBeingUpdated) {
+      if (film.isFavorite) {
+        dispatch(updateFilmFavoriteStatus({
+          filmId: id,
+          status: FavoriteStatus.Delete,
+        }));
+      } else {
+        dispatch(updateFilmFavoriteStatus({
+          filmId: id,
+          status: FavoriteStatus.Add,
+        }));
+      }
+    }
+  };
 
   return (
     <>
@@ -65,18 +87,23 @@ function FilmPage(): JSX.Element {
               </p>
 
               <div className="film-card__buttons">
-                <button className="btn btn--play film-card__button" type="button">
+                <button className="btn btn--play film-card__button" type="button" onClick={handlePlayButtonClick}>
                   <svg viewBox="0 0 19 19" width="19" height="19">
                     <use xlinkHref="#play-s"></use>
                   </svg>
                   <span>Play</span>
                 </button>
-                <button className="btn btn--list film-card__button" type="button">
-                  <svg viewBox="0 0 19 20" width="19" height="20">
-                    <use xlinkHref="#add"></use>
-                  </svg>
+                <button className="btn btn--list film-card__button" type="button" onClick={handleAddToFavoritesButtonClick}>
+                  {film.isFavorite && authorizationStatus === AuthorizationStatus.Auth ?
+                    <svg viewBox="0 0 18 14" width="18" height="14">
+                      <use xlinkHref="#in-list"></use>
+                    </svg>
+                    :
+                    <svg viewBox="0 0 19 20" width="19" height="20">
+                      <use xlinkHref="#add"></use>
+                    </svg>}
                   <span>My list</span>
-                  <span className="film-card__count">9</span>
+                  <span className="film-card__count">{favoriteFilmsCount}</span>
                 </button>
                 {authorizationStatus === AuthorizationStatus.Auth && <Link to={`/films/${film.id}/review`} className="btn film-card__button">Add review</Link>}
               </div>

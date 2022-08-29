@@ -10,8 +10,8 @@ const NUMBER_OF_COLUMNS = 2;
 function FilmReviews({comments}: FilmReviewsProps): JSX.Element {
   const commentsNumberInColumn = Math.ceil(comments.length / NUMBER_OF_COLUMNS);
 
-  const firstColumnComments = [...comments].slice(0, commentsNumberInColumn);
-  const secondColumnComments = [...comments].slice(commentsNumberInColumn, comments.length);
+  const firstColumnComments = comments.slice(0, commentsNumberInColumn);
+  const secondColumnComments = comments.slice(commentsNumberInColumn, comments.length);
 
   return (
     <div className="film-card__reviews film-card__row">

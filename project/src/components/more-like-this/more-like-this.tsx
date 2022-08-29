@@ -7,7 +7,7 @@ type MoreLikeThisProps = {
 }
 
 function MoreLikeThis({films}: MoreLikeThisProps): JSX.Element {
-  const similarFilms = [...films].slice(0, SIMILAR_FILMS_MAX_NUMBER);
+  const similarFilms = films.slice(0, SIMILAR_FILMS_MAX_NUMBER);
 
   return (
     <section className="catalog catalog--like-this">

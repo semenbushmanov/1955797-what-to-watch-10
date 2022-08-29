@@ -26,12 +26,23 @@ export enum APIRoute {
 export enum NameSpace {
   Data = 'DATA',
   User = 'USER',
-  App = 'APP',
 }
 
 export enum ReviewTextLength {
   Min = 50,
   Max = 400,
+}
+
+export enum FavoriteStatus {
+  Add = 1,
+  Delete = 0,
+}
+
+export enum RequestStatus {
+  NotStarted,
+  Loading,
+  Success,
+  Error,
 }
 
 export const FILMS_RENDERING_STEP = 8;

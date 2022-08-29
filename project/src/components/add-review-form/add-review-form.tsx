@@ -1,26 +1,29 @@
 import RatingInput from '../rating-input/rating-input';
-import { useState, ChangeEvent, FormEvent } from 'react';
+import { useState, ChangeEvent, FormEvent, useCallback } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { postCommentAction } from '../../store/api-actions';
 import { UserComment } from '../../types/film';
-import { useParams } from 'react-router-dom';
 import { ReviewTextLength } from '../../const';
 import { getCommentStatus } from '../../store/films-data/selectors';
 
 const RATING_STARS_NUMBER = 10;
-const INITIAL_RATING = 8;
 
-function AddReviewForm(): JSX.Element {
+type AddReviewFormProps = {
+  id: string;
+};
+
+function AddReviewForm({id}: AddReviewFormProps): JSX.Element {
   const dispatch = useAppDispatch();
-  const { id } = useParams();
   const isCommentBeingPosted = useAppSelector(getCommentStatus);
   const ratingStarsArray = [...Array(RATING_STARS_NUMBER).keys()].map((i) => ++i).reverse();
-  const [currentRating, setRating] = useState(INITIAL_RATING);
+  const [currentRating, setRating] = useState(0);
   const [reviewText, setReviewText] = useState('');
 
-  const handleRatingChange = ({target}: ChangeEvent<HTMLInputElement>) => {
-    setRating(Number(target.value));
-  };
+  const handleRatingChange = useCallback(
+    ({target}: ChangeEvent<HTMLInputElement>) => {
+      setRating(Number(target.value));
+    }, []
+  );
 
   const handleTextChange = ({target}: ChangeEvent<HTMLTextAreaElement>) => {
     setReviewText(target.value);
@@ -29,13 +32,11 @@ function AddReviewForm(): JSX.Element {
   const handleSubmit = (evt: FormEvent) => {
     evt.preventDefault();
 
-    if (id) {
-      const userComment: UserComment = {
-        comment: reviewText,
-        rating: currentRating,
-      };
-      dispatch(postCommentAction({filmId: id, comment: userComment}));
-    }
+    const userComment: UserComment = {
+      comment: reviewText,
+      rating: currentRating,
+    };
+    dispatch(postCommentAction({filmId: id, comment: userComment}));
   };
 
   return (
@@ -71,9 +72,13 @@ function AddReviewForm(): JSX.Element {
               <button
                 className="add-review__btn"
                 type="submit"
-                disabled={reviewText.length < ReviewTextLength.Min || reviewText.length > 400}
+                disabled={
+                  reviewText.length < ReviewTextLength.Min ||
+                  reviewText.length > ReviewTextLength.Max ||
+                  currentRating === 0
+                }
               >
-                Post
+                {isCommentBeingPosted === true ? 'Posting' : 'Post'}
               </button>
             </div>
 

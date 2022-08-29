@@ -1,4 +1,4 @@
-import { ChangeEvent } from 'react';
+import { ChangeEvent, memo } from 'react';
 
 type RatingInputProps = {
     rating: number;
@@ -25,4 +25,4 @@ function RatingInput(props: RatingInputProps): JSX.Element {
   );
 }
 
-export default RatingInput;
+export default memo(RatingInput);

@@ -4,7 +4,7 @@ import { AppDispatch, State } from '../types/state';
 import { Film, Films, UserComment, Comments } from '../types/film';
 import { redirectToRoute } from './action';
 import { saveToken, dropToken } from '../services/token';
-import { APIRoute, AppRoute } from '../const';
+import { APIRoute, AppRoute, FavoriteStatus } from '../const';
 import { AuthData } from '../types/auth-data.js';
 import { UserData } from '../types/user-data.js';
 
@@ -32,42 +32,6 @@ export const fetchPromoFilmAction = createAsyncThunk<Film, undefined, {
   },
 );
 
-export const fetchFilmAction = createAsyncThunk<Film, string, {
-  dispatch: AppDispatch,
-  state: State,
-  extra: AxiosInstance
-}>(
-  'data/fetchFilm',
-  async (id, {dispatch, extra: api}) => {
-    const {data} = await api.get<Film>(`${APIRoute.Films}/${id}`);
-    return data;
-  },
-);
-
-export const fetchSimilarFilmsAction = createAsyncThunk<Films, string, {
-  dispatch: AppDispatch,
-  state: State,
-  extra: AxiosInstance
-}>(
-  'data/fetchSimilarFilms',
-  async (id, {dispatch, extra: api}) => {
-    const {data} = await api.get<Films>(`${APIRoute.Films}/${id}/similar`);
-    return data;
-  },
-);
-
-export const fetchFilmCommentsAction = createAsyncThunk<Comments, string, {
-  dispatch: AppDispatch,
-  state: State,
-  extra: AxiosInstance
-}>(
-  'data/fetchFilmComments',
-  async (id, {dispatch, extra: api}) => {
-    const {data} = await api.get<Comments>(`${APIRoute.Comments}/${id}`);
-    return data;
-  },
-);
-
 export const fetchFavoriteFilmsAction = createAsyncThunk<Films, undefined, {
   dispatch: AppDispatch,
   state: State,
@@ -89,6 +53,19 @@ export const postCommentAction = createAsyncThunk<Comments, {filmId: string, com
   async ({filmId, comment}, {dispatch, extra: api}) => {
     const {data} = await api.post<Comments>(`${APIRoute.Comments}/${filmId}`, comment);
     dispatch(redirectToRoute(`/films/${filmId}/reviews`));
+    return data;
+  },
+);
+
+export const updateFilmFavoriteStatus = createAsyncThunk<Film, {filmId: string, status: FavoriteStatus}, {
+  dispatch: AppDispatch,
+  state: State,
+  extra: AxiosInstance
+}>(
+  'data/addFilmToFavorites',
+  async ({filmId, status}, {dispatch, extra: api}) => {
+    const {data} = await api.post<Film>(`${APIRoute.Favorite}/${filmId}/${status}`);
+    dispatch(redirectToRoute(AppRoute.MyList));
     return data;
   },
 );

@@ -5,7 +5,7 @@ import UserBlock from '../../components/user-block/user-block';
 import GenreList from '../../components/genre-list/genre-list';
 import ShowMoreButton from '../../components/show-more-button/show-more-button';
 import { useAppSelector, useAppDispatch } from '../../hooks/index';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FILMS_RENDERING_STEP, ALL_GENRES, AuthorizationStatus, AppRoute, FavoriteStatus } from '../../const';
 import { getPromoFilm, getFilms, getFavoriteFilms, getFilmUpdatingStatus } from '../../store/films-data/selectors';
@@ -39,18 +39,21 @@ function Main(): JSX.Element {
 
   const filmsToRender = filteredFilms.slice(0, renderedFilmsCount);
 
-  const handleShowMoreButtonClick = () => {
-    setRenderedFilmsCount(renderedFilmsCount + FILMS_RENDERING_STEP);
-  };
+  const handleShowMoreButtonClick = useCallback(
+    () => setRenderedFilmsCount(renderedFilmsCount + FILMS_RENDERING_STEP),
+    [renderedFilmsCount]
+  );
 
   const handlePlayButtonClick = () => {
     navigate(`/player/${promoFilm.id}`);
   };
 
-  const changeGenre = (genre: string) => {
-    setCurrentGenre(genre);
-    setRenderedFilmsCount(FILMS_RENDERING_STEP);
-  };
+  const changeGenre = useCallback(
+    (genre: string) => {
+      setCurrentGenre(genre);
+      setRenderedFilmsCount(FILMS_RENDERING_STEP);
+    }, []
+  );
 
   const handleAddToFavoritesButtonClick = () => {
     if (authorizationStatus !== AuthorizationStatus.Auth) {

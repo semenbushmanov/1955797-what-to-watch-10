@@ -1,5 +1,5 @@
 import RatingInput from '../rating-input/rating-input';
-import { useState, ChangeEvent, FormEvent } from 'react';
+import { useState, ChangeEvent, FormEvent, useCallback } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { postCommentAction } from '../../store/api-actions';
 import { UserComment } from '../../types/film';
@@ -19,9 +19,11 @@ function AddReviewForm({id}: AddReviewFormProps): JSX.Element {
   const [currentRating, setRating] = useState(0);
   const [reviewText, setReviewText] = useState('');
 
-  const handleRatingChange = ({target}: ChangeEvent<HTMLInputElement>) => {
-    setRating(Number(target.value));
-  };
+  const handleRatingChange = useCallback(
+    ({target}: ChangeEvent<HTMLInputElement>) => {
+      setRating(Number(target.value));
+    }, []
+  );
 
   const handleTextChange = ({target}: ChangeEvent<HTMLTextAreaElement>) => {
     setReviewText(target.value);

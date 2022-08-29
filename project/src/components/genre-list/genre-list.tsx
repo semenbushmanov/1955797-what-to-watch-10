@@ -1,6 +1,7 @@
 import { Films } from '../../types/film';
 import { Link } from 'react-router-dom';
 import { ALL_GENRES, GENRES_MAX_NUMBER } from '../../const';
+import { memo } from 'react';
 
 type GenreListProps = {
   films: Films,
@@ -29,4 +30,4 @@ function GenreList({films, currentGenre, changeGenre}: GenreListProps): JSX.Elem
   );
 }
 
-export default GenreList;
+export default memo(GenreList);

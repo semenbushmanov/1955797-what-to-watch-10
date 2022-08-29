@@ -26,7 +26,6 @@ export enum APIRoute {
 export enum NameSpace {
   Data = 'DATA',
   User = 'USER',
-  App = 'APP',
 }
 
 export enum ReviewTextLength {

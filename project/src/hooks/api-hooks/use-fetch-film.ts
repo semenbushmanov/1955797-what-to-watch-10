@@ -13,13 +13,15 @@ export const useFetchFilm = (id: string | undefined) => {
     if (id) {
       setStatus(RequestStatus.Loading);
 
-      const {data} = await api.get<Film>(`${APIRoute.Films}/${id}`);
+      try {
+        const {data} = await api.get<Film>(`${APIRoute.Films}/${id}`);
 
-      if (isAlive.current) {
-        if (data) {
+        if (isAlive.current && data) {
           setFilm(data);
           setStatus(RequestStatus.Success);
-        } else {
+        }
+      } catch(error) {
+        if (isAlive.current){
           setStatus(RequestStatus.Error);
         }
       }

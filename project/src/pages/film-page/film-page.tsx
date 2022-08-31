@@ -27,14 +27,14 @@ function FilmPage(): JSX.Element {
   const [comments] = useFetchFilmComments(id);
   const [similarFilms] = useFetchSimilarFilms(id);
 
-  if (status === RequestStatus.Loading) {
+  if (!id || status === RequestStatus.Error) {
+    return <PageNotFound />;
+  }
+
+  if (!film || status === RequestStatus.Loading) {
     return (
       <LoadingScreen />
     );
-  }
-
-  if (!film || !id) {
-    return <PageNotFound />;
   }
 
   const handlePlayButtonClick = () => {
